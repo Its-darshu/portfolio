@@ -48,6 +48,24 @@ export default function Home() {
               Currently working on <span className="font-bold">Freelance</span>
             </p>
           </div>
+          
+          {/* Mobile Buttons */}
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link
+              to="/contact"
+              className="border border-primary px-4 py-2 text-white text-base font-medium hover:bg-primary/10 transition-colors"
+            >
+              Contact me!!
+            </Link>
+            <a
+              href="/Darshan-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-gray px-4 py-2 text-gray text-base font-medium hover:bg-gray/10 transition-colors"
+            >
+              Resume
+            </a>
+          </div>
         </div>
 
         {/* Desktop Layout */}
@@ -61,12 +79,22 @@ export default function Home() {
             <p className="text-gray text-base leading-relaxed">
               He crafts responsive websites where technologies meet creativity
             </p>
-            <Link
-              to="/contact"
-              className="border border-primary px-4 py-2 text-white text-base font-medium hover:bg-primary/10 transition-colors w-fit"
-            >
-              Contact me!!
-            </Link>
+            <div className="flex gap-4 flex-wrap">
+              <Link
+                to="/contact"
+                className="border border-primary px-4 py-2 text-white text-base font-medium hover:bg-primary/10 transition-colors w-fit"
+              >
+                Contact me!!
+              </Link>
+              <a
+                href="/Darshan-Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-gray px-4 py-2 text-gray text-base font-medium hover:bg-gray/10 transition-colors w-fit"
+              >
+                Resume
+              </a>
+            </div>
           </div>
           <div className="relative flex justify-center items-center">
             {/* Decorative elements */}
