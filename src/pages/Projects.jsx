@@ -19,6 +19,15 @@ export default function Projects() {
       githubUrl: 'https://github.com/Its-darshu/DarkSphere',
       image: '/darksphere.svg',
     },
+
+    {
+      title: 'Sullia auto',
+      description: 'A platform service to call immediate auto in sullia',
+      technologies: ['React'],
+      liveUrl: 'https://sulliaauto.vercel.app/',
+      githubUrl: 'https://github.com/Its-darshu/auto-rickshaw',
+      image: '/sullia-auto.svg',
+    },
   ];
   const smallProjects = [
     {
