@@ -8,7 +8,7 @@ export default function Projects() {
       technologies: ['React', 'JavaScript', 'cohereAi'],
       liveUrl: '#',
       githubUrl: '#',
-      image: '/project-placeholder.png',
+      image: '/11.svg',
     },
   ];
   const smallProjects = [

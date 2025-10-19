@@ -3,11 +3,16 @@ export default function ProjectCard({ project }) {
     <div className="border border-gray flex flex-col max-w-[331px] group cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 hover:-translate-y-2">
       {/* Project Image */}
       {project.image && (
-        <div className="border-b border-gray h-[201px] overflow-hidden">
+        <div className="border-b border-gray h-[201px] overflow-hidden bg-gray/5 flex items-center justify-center">
           <img
             src={project.image}
             alt={project.title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            onError={(e) => {
+              console.log('Image failed to load:', project.image);
+              e.target.style.display = 'none';
+              e.target.parentNode.innerHTML = `<div class="flex items-center justify-center w-full h-full text-gray">Image not found: ${project.image}</div>`;
+            }}
           />
         </div>
       )}

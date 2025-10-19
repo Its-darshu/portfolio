@@ -10,7 +10,7 @@ export default function Home() {
     technologies: ['React', 'JavaScript', 'cohereAi'],
     liveUrl: '#',
     githubUrl: '#',
-    image: '/project-placeholder.png',
+    image: '/11.svg',
   };
   return (
     <div className="w-full min-h-screen bg-background">
