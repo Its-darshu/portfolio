@@ -24,7 +24,7 @@ export default function Footer() {
             <h3 className="text-white font-medium text-2xl">Media</h3>
             <div className="flex gap-2">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/Its-darshu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 flex items-center justify-center hover:opacity-80"

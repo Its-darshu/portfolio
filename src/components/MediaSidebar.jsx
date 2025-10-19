@@ -4,7 +4,7 @@ export default function MediaSidebar() {
       {/* Line from top to social icons */}
       <div className="w-px h-80 bg-gray opacity-80"></div>
         <a
-          href="https://github.com/yourusername"
+          href="https://github.com/Its-darshu"
           target="_blank"
           rel="noopener noreferrer"
           className="w-8 h-8 flex items-center justify-center hover:opacity-80"

@@ -152,7 +152,7 @@ export default function Header() {
           <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex gap-2">
             {/* GitHub */}
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/Its-darshu"
               target="_blank"
               rel="noopener noreferrer"
               className="w-16 h-16 border border-gray flex items-center justify-center hover:opacity-80"

@@ -91,7 +91,7 @@ export default function Contact() {
             className="w-8 h-8 text-gray"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M24 4H8C5.79 4 4.02 5.79 4.02 8L4 24C4 26.21 5.79 28 8 28H24C26.21 28 28 26.21 28 24V8C28 5.79 26.21 4 24 4ZM23.54 11.54L16.54 18.54C16.24 18.84 15.76 18.84 15.46 18.54L8.46 11.54C8.16 11.24 8.16 10.76 8.46 10.46C8.76 10.16 9.24 10.16 9.54 10.46L16 16.92L22.46 10.46C22.76 10.16 23.24 10.16 23.54 10.46C23.84 10.76 23.84 11.24 23.54 11.54Z" />
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
           </svg>
           <a
             href="https://x.com/darshan99806"
@@ -99,11 +99,12 @@ export default function Contact() {
             rel="noopener noreferrer"
             className="text-gray hover:text-white transition-colors"
           >
-            x.com/cookmithick
+            @darshan99806
           </a>
         </div>
       </section>
-      {/* Contact Form (Mobile View) */}
+      {/* Contact Form (Mobile View) - Commented out for future use */}
+      {/* 
       <section className="max-w-[505px] mx-auto px-8 py-16 md:hidden">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-4">
@@ -152,6 +153,7 @@ export default function Contact() {
           </button>
         </form>
       </section>
+      */}
     </div>
   );
 }

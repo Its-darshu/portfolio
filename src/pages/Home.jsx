@@ -9,7 +9,7 @@ export default function Home() {
     description: 'Detect Email phishing using AI',
     technologies: ['React', 'JavaScript', 'cohereAi'],
     liveUrl: '#',
-    githubUrl: '#',
+    githubUrl: 'https://github.com/Its-darshu',
     image: '/11.svg',
   };
   return (
