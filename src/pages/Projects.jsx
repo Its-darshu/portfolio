@@ -41,9 +41,9 @@ export default function Projects() {
     {
       title: 'AI tutor',
       description: 'Ai powered tutor with generates text, voice, image at same time',
-      technologies: ['React', 'Flask', 'Firebase', 'unsplashApi',],
+      technologies: ['TS', 'Flask', 'gemini-2.5-flash', 'Pollinations.ai', 'Huggingface Flux'],
       liveUrl: '',
-      githubUrl: 'https://github.com/Its-darshu/AiTutor',
+      githubUrl: 'https://github.com/Its-darshu/Personal-Tutor',
       image: '/aitutor.svg',
     },
 
