@@ -28,55 +28,32 @@ export default function Projects() {
       githubUrl: 'https://github.com/Its-darshu/auto-rickshaw',
       image: '/sullia-auto.svg',
     },
+
+    {
+      title: 'SmartQ',
+      description: 'A platform service to manage hospital queues effectively',
+      technologies: ['React', 'Flask', 'Firebase'],
+      liveUrl: 'https://smartq-patient.onrender.com/',
+      githubUrl: 'https://github.com/dayanandaks4/HACTHON_SIT',
+      image: '/smartq.svg',
+    },
+
+    {
+      title: 'AI tutor',
+      description: 'Ai powered tutor with generates text, voice, image at same time',
+      technologies: ['React', 'Flask', 'Firebase', 'unsplashApi',],
+      liveUrl: '',
+      githubUrl: 'https://github.com/Its-darshu/AiTutor',
+      image: '/aitutor.svg',
+    },
+
   ];
   const smallProjects = [
     {
-      title: 'Bot boilerplate',
-      description: 'Start creating scalable discord.js bot with typescript in seconds',
-      technologies: ['Discord.js', 'TS', 'JS'],
-      githubUrl: '#',
-    },
-    {
-      title: 'My blog',
-      description: 'Front-end of my future blog website written in vue',
-      technologies: ['VUE', 'CSS', 'JS'],
-      githubUrl: '#',
-    },
-    {
-      title: 'Chess pro',
-      description: 'Figma landing page about service for viewing chess tournaments',
-      technologies: ['Figma'],
-      figmaUrl: '#',
-    },
-    {
-      title: 'Crash protect website',
-      description: 'Figma template for website about anti-raid, anti-crash discord bot',
-      technologies: ['Figma'],
-      figmaUrl: '#',
-    },
-    {
-      title: 'CSS experiments',
-      description: 'Collection of my different little projects in css',
-      technologies: ['HTML', 'CSS'],
-      liveUrl: '#',
-    },
-    {
-      title: 'Web Dev nvim config',
-      description: 'Config for neovim perfect for web developer',
-      technologies: ['Lua', 'NeoVim'],
-      githubUrl: '#',
-    },
-    {
-      title: 'Ooku',
-      description: 'Simple link shortener with auth',
-      technologies: ['Python', 'Quart', 'HTML'],
-      liveUrl: '#',
-    },
-    {
-      title: 'School website',
-      description: 'Figma template website for my school',
-      technologies: ['Figma'],
-      figmaUrl: '#',
+      title: 'Discord quest',
+      description: 'A JavaScript script to automatically complete Discord quests by simulating game activity, video watching, or streaming.',
+      technologies: ['JS'],
+      githubUrl: 'https://github.com/Its-darshu/discord-quest',
     },
   ];
   return (
