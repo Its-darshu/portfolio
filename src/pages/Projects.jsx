@@ -4,7 +4,7 @@ export default function Projects() {
   const completeProjects = [
     {
       title: 'Phish Guard',
-      description: 'Detect Email phishing using AI',
+      description: 'Detect Email phishing using AI.',
       technologies: ['React', 'JavaScript', 'cohereAi'],
       liveUrl: '#',
       githubUrl: 'https://github.com/Its-darshu/phishing-detector',
@@ -13,7 +13,7 @@ export default function Projects() {
 
     {
       title: 'DarkSphere',
-      description: 'A place to share your darkhumor memes anonymously',
+      description: 'A place to share your darkhumor memes anonymously.',
       technologies: ['React'],
       liveUrl: 'https://darksphere.vercel.app/',
       githubUrl: 'https://github.com/Its-darshu/DarkSphere',
@@ -22,7 +22,7 @@ export default function Projects() {
 
     {
       title: 'Sullia auto',
-      description: 'A platform service to call immediate auto in sullia',
+      description: 'A platform service to call immediate auto in sullia.',
       technologies: ['React'],
       liveUrl: 'https://sulliaauto.vercel.app/',
       githubUrl: 'https://github.com/Its-darshu/auto-rickshaw',
@@ -31,7 +31,7 @@ export default function Projects() {
 
     {
       title: 'SmartQ',
-      description: 'A platform service to manage hospital queues effectively',
+      description: 'A platform service to manage hospital queues effectively.',
       technologies: ['React', 'Flask', 'Firebase'],
       liveUrl: 'https://smartq-patient.onrender.com/',
       githubUrl: 'https://github.com/dayanandaks4/HACTHON_SIT',
@@ -40,8 +40,8 @@ export default function Projects() {
 
     {
       title: 'AI tutor',
-      description: 'Ai powered tutor with generates text, voice, image at same time',
-      technologies: ['TS', 'Flask', 'gemini-2.5-flash', 'Pollinations.ai', 'Huggingface Flux'],
+      description: 'Ai GPT which generates text, voice, image at same time.',
+      technologies: ['TS', 'Flask', 'g-2.5-flash','HF-Flux'],
       liveUrl: '',
       githubUrl: 'https://github.com/Its-darshu/Personal-Tutor',
       image: '/aitutor.svg',
