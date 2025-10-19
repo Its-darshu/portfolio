@@ -15,7 +15,7 @@ export default function Projects() {
       title: 'DarkSphere',
       description: 'A place to share your darkhumor memes anonymously',
       technologies: ['React'],
-      liveUrl: 'darksphere.vercel.app',
+      liveUrl: 'https://darksphere.vercel.app/',
       githubUrl: 'https://github.com/Its-darshu/DarkSphere',
       image: '/darksphere.svg',
     },
