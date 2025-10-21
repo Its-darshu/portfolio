@@ -27,7 +27,7 @@ npm run build
 
 ## 📝 Blog System
 
-This portfolio includes a **GitHub-based blog system** with an admin dashboard!
+This portfolio includes a **Firebase-powered blog system** with an admin dashboard!
 
 ### Quick Access
 - **Blog**: `/blog`
@@ -37,12 +37,11 @@ This portfolio includes a **GitHub-based blog system** with an admin dashboard!
 ### How It Works
 1. Visit `/admin` and login
 2. Create/edit blog posts
-3. Save and download `blog-data.json`
-4. Replace `/public/blog-data.json`
-5. Commit and push to GitHub
-6. Auto-deploy on Vercel! ⚡
+3. Click "Save" - **Posts go live instantly!** ⚡
 
-📖 **Full guide**: See [BLOG_ADMIN_GUIDE.md](./BLOG_ADMIN_GUIDE.md)
+No more JSON files, no more git commits for blog posts!
+
+📖 **Setup guide**: See [FIREBASE_SETUP.md](./FIREBASE_SETUP.md)
 
 ## 🛠️ Tech Stack
 
@@ -50,6 +49,7 @@ This portfolio includes a **GitHub-based blog system** with an admin dashboard!
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS
 - **Routing**: React Router DOM
+- **Database**: Firebase Firestore
 - **Deployment**: Vercel
 
 ## 📁 Project Structure
@@ -57,7 +57,6 @@ This portfolio includes a **GitHub-based blog system** with an admin dashboard!
 ```
 portfolio/
 ├── public/
-│   ├── blog-data.json      # Blog posts data
 │   └── ...
 ├── src/
 │   ├── components/

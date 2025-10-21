@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SectionTitle from '../components/SectionTitle';
 import BlogPost from '../components/BlogPost';
+import { db } from '../firebase';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 
 export default function Blog() {
   const navigate = useNavigate();
@@ -14,9 +16,13 @@ export default function Blog() {
 
   const loadBlogPosts = async () => {
     try {
-      const response = await fetch('/blog-data.json');
-      const data = await response.json();
-      setBlogPosts(data.posts || []);
+      const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const postsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setBlogPosts(postsData);
     } catch (error) {
       console.error('Error loading blog posts:', error);
       setBlogPosts([]);

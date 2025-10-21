@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { db, auth } from '../firebase';
+import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, orderBy, query } from 'firebase/firestore';
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [posts, setPosts] = useState([]);
   const [editingPost, setEditingPost] = useState(null);
   const [showEditor, setShowEditor] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [loginError, setLoginError] = useState('');
   
   // Form state
   const [formData, setFormData] = useState({
@@ -21,40 +27,62 @@ export default function AdminDashboard() {
 
   // Check authentication on mount
   useEffect(() => {
-    const auth = sessionStorage.getItem('adminAuth');
-    if (auth === 'authenticated') {
-      setIsAuthenticated(true);
-      loadPosts();
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+        loadPosts();
+      } else {
+        setIsAuthenticated(false);
+      }
+      setAuthLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const loadPosts = async () => {
     try {
-      const response = await fetch('/blog-data.json');
-      const data = await response.json();
-      setPosts(data.posts || []);
+      const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const postsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setPosts(postsData);
     } catch (error) {
       console.error('Error loading posts:', error);
       setPosts([]);
     }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Simple password check - you can change this password
-    if (password === 'darshan@admin2025') {
-      sessionStorage.setItem('adminAuth', 'authenticated');
-      setIsAuthenticated(true);
-      loadPosts();
-    } else {
-      alert('Incorrect password!');
+    setLoginError('');
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // Success - onAuthStateChanged will handle the rest
+    } catch (error) {
+      console.error('Login error:', error);
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+        setLoginError('Incorrect email or password');
+      } else if (error.code === 'auth/user-not-found') {
+        setLoginError('User not found. Please check your email');
+      } else if (error.code === 'auth/invalid-email') {
+        setLoginError('Invalid email format');
+      } else {
+        setLoginError('Login failed. Please try again');
+      }
     }
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('adminAuth');
-    setIsAuthenticated(false);
-    setPassword('');
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -88,66 +116,75 @@ export default function AdminDashboard() {
     setShowEditor(true);
   };
 
-  const handleSavePost = () => {
-    const newPost = {
-      id: editingPost || Date.now(),
-      title: formData.title,
-      excerpt: formData.excerpt,
-      content: formData.content,
-      image: formData.image,
-      tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
-      readTime: parseInt(formData.readTime),
-      date: new Date().toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric', 
-        year: 'numeric' 
-      }),
-    };
+  const handleSavePost = async () => {
+    try {
+      const postData = {
+        title: formData.title,
+        excerpt: formData.excerpt,
+        content: formData.content,
+        image: formData.image,
+        tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+        readTime: parseInt(formData.readTime),
+        date: new Date().toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric', 
+          year: 'numeric' 
+        }),
+        timestamp: Date.now()
+      };
 
-    let updatedPosts;
-    if (editingPost) {
-      updatedPosts = posts.map(post => post.id === editingPost ? newPost : post);
-    } else {
-      updatedPosts = [newPost, ...posts];
+      if (editingPost) {
+        // Update existing post
+        const postRef = doc(db, 'posts', editingPost);
+        await updateDoc(postRef, postData);
+        alert('✅ Post updated successfully!');
+      } else {
+        // Create new post
+        await addDoc(collection(db, 'posts'), postData);
+        alert('✅ Post published successfully!');
+      }
+
+      // Reload posts
+      await loadPosts();
+      
+      setShowEditor(false);
+      setEditingPost(null);
+      setFormData({
+        title: '',
+        excerpt: '',
+        content: '',
+        image: '',
+        tags: '',
+        readTime: 5,
+      });
+    } catch (error) {
+      console.error('Error saving post:', error);
+      alert('❌ Error saving post: ' + error.message);
     }
-
-    setPosts(updatedPosts);
-    downloadJSON(updatedPosts);
-    setShowEditor(false);
-    setFormData({
-      title: '',
-      excerpt: '',
-      content: '',
-      image: '',
-      tags: '',
-      readTime: 5,
-    });
   };
 
-  const handleDeletePost = (postId) => {
+  const handleDeletePost = async (postId) => {
     if (window.confirm('Are you sure you want to delete this post?')) {
-      const updatedPosts = posts.filter(post => post.id !== postId);
-      setPosts(updatedPosts);
-      downloadJSON(updatedPosts);
+      try {
+        await deleteDoc(doc(db, 'posts', postId));
+        alert('✅ Post deleted successfully!');
+        await loadPosts();
+      } catch (error) {
+        console.error('Error deleting post:', error);
+        alert('❌ Error deleting post: ' + error.message);
+      }
     }
-  };
-
-  const downloadJSON = (postsData) => {
-    const dataStr = JSON.stringify({ posts: postsData }, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'blog-data.json';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    alert('✅ Blog data downloaded! Replace /public/blog-data.json with this file and push to GitHub.');
   };
 
   // Login Screen
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center px-4">
@@ -158,13 +195,35 @@ export default function AdminDashboard() {
           </h1>
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter admin password"
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setLoginError('');
+              }}
+              placeholder="Email"
               className="border border-gray bg-transparent px-4 py-3 text-white placeholder-gray focus:outline-none focus:border-primary"
+              required
               autoFocus
             />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setLoginError('');
+              }}
+              placeholder="Password"
+              className="border border-gray bg-transparent px-4 py-3 text-white placeholder-gray focus:outline-none focus:border-primary"
+              required
+            />
+            
+            {loginError && (
+              <div className="bg-red-500/10 border border-red-500/50 px-4 py-3 text-red-400 text-sm">
+                ❌ {loginError}
+              </div>
+            )}
+            
             <button
               type="submit"
               className="border border-primary px-6 py-3 text-white font-medium hover:bg-primary/10 transition-colors"
@@ -337,7 +396,7 @@ export default function AdminDashboard() {
             📝 <strong>Total Posts:</strong> {posts.length}
           </p>
           <p className="text-gray text-sm mt-2">
-            💡 After saving, download the JSON file and replace <code className="text-primary">/public/blog-data.json</code> then push to GitHub.
+            ⚡ Posts are saved to Firebase and published instantly!
           </p>
         </div>
 
