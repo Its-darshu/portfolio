@@ -73,6 +73,15 @@ export default function Header() {
               <span className={isActive('/about') ? 'text-white' : 'text-gray'}>about-me</span>
             </Link>
             <Link
+              to="/blog"
+              className={`flex items-start font-normal text-base ${
+                isActive('/blog') ? 'text-white' : 'text-gray'
+              }`}
+            >
+              <span className="text-primary">#</span>
+              <span className={isActive('/blog') ? 'text-white' : 'text-gray'}>blog</span>
+            </Link>
+            <Link
               to="/contact"
               className={`flex items-start font-normal text-base ${
                 isActive('/contact') ? 'text-white' : 'text-gray'
@@ -135,6 +144,16 @@ export default function Header() {
             >
               <span className="text-primary">#</span>
               <span className={isActive('/about') ? 'text-white' : 'text-gray'}>about-me</span>
+            </Link>
+            <Link
+              to="/blog"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`flex items-start text-[32px] font-mono ${
+                isActive('/blog') ? 'font-medium' : 'font-normal'
+              }`}
+            >
+              <span className="text-primary">#</span>
+              <span className={isActive('/blog') ? 'text-white' : 'text-gray'}>blog</span>
             </Link>
             <Link
               to="/contact"
