@@ -14,6 +14,11 @@ export default function AdminDashboard() {
   const [showEditor, setShowEditor] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [loginError, setLoginError] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
+  
+  // Cloudinary config
+  const CLOUDINARY_CLOUD_NAME = 'dg2rrya2l';
+  const CLOUDINARY_UPLOAD_PRESET = 'portfolio_blog';
   
   // Form state
   const [formData, setFormData] = useState({
@@ -80,8 +85,56 @@ export default function AdminDashboard() {
       await signOut(auth);
       setEmail('');
       setPassword('');
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Check file size (max 50MB)
+    if (file.size > 50 * 1024 * 1024) {
+      alert('❌ Image too large! Maximum size is 50MB.');
+      return;
+    }
+
+    // Check file type
+    if (!file.type.startsWith('image/')) {
+      alert('❌ Please upload an image file.');
+      return;
+    }
+
+    setUploadingImage(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      formData.append('folder', 'blog');
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.secure_url) {
+        setFormData(prev => ({ ...prev, image: data.secure_url }));
+        alert('✅ Image uploaded successfully!');
+      } else {
+        throw new Error('Upload failed');
+      }
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('Upload error:', error);
+      alert('❌ Failed to upload image. Please try again.');
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -257,31 +310,53 @@ export default function AdminDashboard() {
                 onClick={() => setShowEditor(false)}
                 className="border border-gray px-4 py-2 text-gray hover:text-white transition-colors"
               >
-                Cancel
-              </button>
-              <button
-                onClick={handleSavePost}
-                className="border border-primary px-6 py-2 text-white font-medium hover:bg-primary/10 transition-colors"
-              >
-                Save Post
-              </button>
-            </div>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="text-white mb-2 block">Image</label>
+                <div className="flex flex-col gap-2">
+                  <input
+                    type="text"
+                    name="image"
+                    value={formData.image}
+                    onChange={handleInputChange}
+                    placeholder="Image URL or upload below"
+                    className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary"
+                  />
+                  <div className="flex items-center gap-2">
+                    <label className="flex-1 border border-primary px-4 py-2 text-white text-center cursor-pointer hover:bg-primary/10 transition-colors relative">
+                      {uploadingImage ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Uploading...
+                        </span>
+                      ) : (
+                        '📤 Upload Image'
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        disabled={uploadingImage}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                  <p className="text-gray text-xs">Max 50MB • JPG, PNG, GIF, WebP</p>
+                </div>
+              </div>
 
-          <div className="flex flex-col gap-6">
-            <div>
-              <label className="text-white mb-2 block">Title *</label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary"
-                required
-              />
+              <div>
+                <label className="text-white mb-2 block">Read Time (minutes)</label>
+                <input
+                  type="number"
+                  name="readTime"
+                  value={formData.readTime}
+                  onChange={handleInputChange}
+                  min="1"
+                  className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary"
+                />
+              </div>
             </div>
-
-            <div>
               <label className="text-white mb-2 block">Excerpt *</label>
               <textarea
                 name="excerpt"
