@@ -15,6 +15,7 @@ function App() {
     <Router>
       <div className="min-h-screen bg-background flex flex-col">
         <MediaSidebar />
+        <Header />
         <main className="flex-1 pt-20">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -25,7 +26,6 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
-        </main>tes>
         </main>
         <Footer />
       </div>

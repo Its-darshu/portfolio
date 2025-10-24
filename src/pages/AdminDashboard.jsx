@@ -85,6 +85,11 @@ export default function AdminDashboard() {
       await signOut(auth);
       setEmail('');
       setPassword('');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -136,11 +141,6 @@ export default function AdminDashboard() {
     } finally {
       setUploadingImage(false);
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleNewPost = () => {
@@ -310,6 +310,54 @@ export default function AdminDashboard() {
                 onClick={() => setShowEditor(false)}
                 className="border border-gray px-4 py-2 text-gray hover:text-white transition-colors"
               >
+                Cancel
+              </button>
+              <button
+                onClick={handleSavePost}
+                className="border border-primary px-6 py-2 text-white font-medium hover:bg-primary/10 transition-colors"
+              >
+                Save Post
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <div>
+              <label className="text-white mb-2 block">Title *</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="text-white mb-2 block">Excerpt *</label>
+              <textarea
+                name="excerpt"
+                value={formData.excerpt}
+                onChange={handleInputChange}
+                rows="3"
+                className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary resize-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="text-white mb-2 block">Content * (Markdown supported)</label>
+              <textarea
+                name="content"
+                value={formData.content}
+                onChange={handleInputChange}
+                rows="15"
+                className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary resize-y font-mono text-sm"
+                required
+              />
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="text-white mb-2 block">Image</label>
@@ -343,54 +391,6 @@ export default function AdminDashboard() {
                   </div>
                   <p className="text-gray text-xs">Max 50MB • JPG, PNG, GIF, WebP</p>
                 </div>
-              </div>
-
-              <div>
-                <label className="text-white mb-2 block">Read Time (minutes)</label>
-                <input
-                  type="number"
-                  name="readTime"
-                  value={formData.readTime}
-                  onChange={handleInputChange}
-                  min="1"
-                  className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary"
-                />
-              </div>
-            </div>
-              <label className="text-white mb-2 block">Excerpt *</label>
-              <textarea
-                name="excerpt"
-                value={formData.excerpt}
-                onChange={handleInputChange}
-                rows="3"
-                className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary resize-none"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="text-white mb-2 block">Content * (Markdown supported)</label>
-              <textarea
-                name="content"
-                value={formData.content}
-                onChange={handleInputChange}
-                rows="15"
-                className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary resize-y font-mono text-sm"
-                required
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="text-white mb-2 block">Image URL</label>
-                <input
-                  type="text"
-                  name="image"
-                  value={formData.image}
-                  onChange={handleInputChange}
-                  placeholder="/blog/image.jpg"
-                  className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary"
-                />
               </div>
 
               <div>
