@@ -466,15 +466,6 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="mb-6 border border-primary/30 bg-primary/5 p-4">
-          <p className="text-white text-sm">
-            📝 <strong>Total Posts:</strong> {posts.length}
-          </p>
-          <p className="text-gray text-sm mt-2">
-            ⚡ Posts are saved to Firebase and published instantly!
-          </p>
-        </div>
-
         {posts.length === 0 ? (
           <div className="border border-gray p-12 text-center">
             <p className="text-gray text-lg mb-4">No blog posts yet</p>

@@ -1,7 +1,17 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function BlogPost({ post }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/blog/${post.id}`);
+  };
+
   return (
-    <article className="border border-gray flex flex-col max-w-[380px] group cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 hover:-translate-y-2">
-      {/* Blog Image */}
+    <article 
+      onClick={handleClick}
+      className="border border-gray flex flex-col max-w-[380px] group cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/50 hover:-translate-y-2"
+    >
       {post.image && (
         <div className="border-b border-gray h-[220px] overflow-hidden bg-gray/5 flex items-center justify-center">
           <img
@@ -37,19 +47,9 @@ export default function BlogPost({ post }) {
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
             {post.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="text-primary text-sm border border-primary/30 px-2 py-1 hover:bg-primary/10 transition-colors"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
-
         {/* Read More Button */}
         <div className="mt-auto pt-4">
-          <button className="text-white text-base font-medium hover:text-primary transition-colors duration-300 flex items-center gap-2 group/btn">
+          <div className="text-white text-base font-medium hover:text-primary transition-colors duration-300 flex items-center gap-2 group/btn">
             <span>Read more</span>
             <svg
               className="w-5 h-5 transform transition-transform duration-300 group-hover/btn:translate-x-1"
@@ -60,6 +60,16 @@ export default function BlogPost({ post }) {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}               strokeLinejoin="round"
                 strokeWidth={2}
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
