@@ -47,6 +47,15 @@ export default function Projects() {
       image: '/aitutor.svg',
     },
 
+    {
+      title: 'Visora',
+      description: 'Powerful AI tools for text, image, voice, and audio processing.',
+      technologies: ['TS', 'Flask', 'g-2.5-pro','HF-Flux'],
+      liveUrl: '',
+      githubUrl: 'https://github.com/Its-darshu/Visora',
+      image: '/visora.svg',
+    },
+
   ];
   const smallProjects = [
     {
