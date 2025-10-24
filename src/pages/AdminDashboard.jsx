@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db, auth } from '../firebase';
-import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 
 export default function AdminDashboard() {
@@ -171,6 +171,17 @@ export default function AdminDashboard() {
 
   const handleSavePost = async () => {
     try {
+      // Generate slug from first 2 words of title
+      const generateSlug = (title) => {
+        return title
+          .toLowerCase()
+          .split(' ')
+          .slice(0, 2)
+          .join('-')
+          .replace(/[^a-z0-9-]/g, '') // Remove special characters
+          + '-' + Date.now(); // Add timestamp to ensure uniqueness
+      };
+
       const postData = {
         title: formData.title,
         excerpt: formData.excerpt,
@@ -192,8 +203,9 @@ export default function AdminDashboard() {
         await updateDoc(postRef, postData);
         alert('✅ Post updated successfully!');
       } else {
-        // Create new post
-        await addDoc(collection(db, 'posts'), postData);
+        // Create new post with custom slug ID
+        const slug = generateSlug(formData.title);
+        await setDoc(doc(db, 'posts', slug), postData);
         alert('✅ Post published successfully!');
       }
 
