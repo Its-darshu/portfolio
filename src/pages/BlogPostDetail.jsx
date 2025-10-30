@@ -148,7 +148,7 @@ export default function BlogPostDetail() {
             <div className="flex gap-3">
               {/* Quick Share Links */}
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${window.location.origin}/blog/${post.id}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
@@ -159,7 +159,7 @@ export default function BlogPostDetail() {
                 </svg>
               </a>
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${window.location.origin}/blog/${post.id}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
