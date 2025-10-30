@@ -13,7 +13,7 @@ const ShareCard = ({ post, onClose }) => {
       if (cardRef.current) {
         const canvas = await html2canvas(cardRef.current, {
           scale: 2,
-          backgroundColor: '#110540',
+          backgroundColor: '#ffffff',
           logging: false,
           width: 1080,
           height: 1920,
@@ -83,13 +83,18 @@ const ShareCard = ({ post, onClose }) => {
         <h3 className="text-xl font-bold text-white mb-4">Instagram Story Preview</h3>
 
         {/* Instagram Story Card Preview - Visible */}
-        <div className="mb-6 w-full aspect-[9/16] bg-gradient-to-br from-[#110540] via-purple-900 to-blue-900 rounded-lg overflow-hidden relative">
-          {/* Decorative background blur effects */}
-          <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-600 rounded-full blur-[100px] opacity-30"></div>
-          <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-purple-600 rounded-full blur-[100px] opacity-30"></div>
+        <div className="mb-6 w-full aspect-[9/16] bg-white rounded-lg overflow-hidden relative">
+          {/* Background Image - using post image as background */}
+          <div className="absolute inset-0">
+            {post.image ? (
+              <img src={post.image} alt="Background" className="w-full h-full object-cover blur-sm" crossOrigin="anonymous" />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-green-200 via-blue-200 to-purple-200"></div>
+            )}
+          </div>
           
-          {/* Phone Frame */}
-          <div className="absolute inset-[5%] bg-gradient-to-b from-yellow-200 via-yellow-400 to-orange-400 rounded-[25px] shadow-lg flex flex-col p-4">
+          {/* Glassmorphism Card */}
+          <div className="absolute inset-[8%] bg-white/5 backdrop-blur-md rounded-[45px] flex flex-col p-3 border border-white/10">
             {/* /blog label */}
             <div className="mb-2">
               <p className="font-mono text-xs">
@@ -99,7 +104,7 @@ const ShareCard = ({ post, onClose }) => {
             </div>
             
             {/* Blog Image */}
-            <div className="bg-gray-300 border border-black rounded-[15px] overflow-hidden mb-2" style={{ height: '45%' }}>
+            <div className="bg-gray-300 border border-black rounded-[26px] overflow-hidden mb-auto" style={{ height: '45%' }}>
               {post.image ? (
                 <img src={post.image} alt={post.title} className="w-full h-full object-cover" crossOrigin="anonymous" />
               ) : (
@@ -107,16 +112,10 @@ const ShareCard = ({ post, onClose }) => {
               )}
             </div>
             
-            {/* Blog Title */}
-            <h2 className="font-mono text-sm font-semibold text-black mb-1 line-clamp-2">{post.title}</h2>
-            
-            {/* Blog Excerpt */}
-            <p className="font-mono text-xs text-black mb-2 line-clamp-2">{post.excerpt}</p>
-            
             {/* CTA Button */}
-            <div className="mt-auto">
-              <div className="bg-black rounded-lg px-3 py-1.5">
-                <p className="font-mono text-white text-xs text-center">Click here to read</p>
+            <div className="mt-2">
+              <div className="bg-white/10 backdrop-blur-sm rounded-[15px] px-3 py-2 border border-white/20">
+                <p className="font-mono font-semibold text-black text-xs text-center">Click here to read</p>
               </div>
             </div>
           </div>
@@ -129,33 +128,55 @@ const ShareCard = ({ post, onClose }) => {
             style={{ 
               width: '1080px', 
               height: '1920px',
-              background: '#110540',
+              background: '#ffffff',
               position: 'relative',
               fontFamily: "'Fira Code', monospace"
             }}
           >
-            {/* Decorative background blur effects */}
-            <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: '60%', height: '60%', background: '#2563eb', borderRadius: '50%', filter: 'blur(200px)', opacity: 0.3 }}></div>
-            <div style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '60%', height: '60%', background: '#9333ea', borderRadius: '50%', filter: 'blur(200px)', opacity: 0.3 }}></div>
+            {/* Background Image - full bleed with blur */}
+            <div style={{ position: 'absolute', inset: 0 }}>
+              {post.image ? (
+                <img 
+                  src={post.image} 
+                  alt="Background"
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover',
+                    filter: 'blur(20px)',
+                    transform: 'scale(1.1)'
+                  }} 
+                  crossOrigin="anonymous"
+                />
+              ) : (
+                <div style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  background: 'linear-gradient(to bottom right, #86efac, #93c5fd, #c4b5fd)' 
+                }}></div>
+              )}
+            </div>
             
-            {/* Phone Frame */}
+            {/* Glassmorphism Card */}
             <div style={{ 
               position: 'absolute', 
-              top: '5%', 
-              left: '5%', 
-              right: '5%', 
-              bottom: '5%', 
-              background: 'linear-gradient(to bottom, #fef08a, #facc15, #fb923c)',
-              borderRadius: '60px',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+              top: '170px',
+              left: '71px',
+              right: '71px',
+              bottom: '170px',
+              background: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(40px)',
+              WebkitBackdropFilter: 'blur(40px)',
+              borderRadius: '91px',
               display: 'flex',
               flexDirection: 'column',
-              padding: '80px'
+              padding: '60px',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
               {/* /blog label */}
-              <div style={{ marginBottom: '40px' }}>
-                <p style={{ fontFamily: "'Fira Code', monospace", fontSize: '48px', fontWeight: 500 }}>
-                  <span style={{ color: '#0004ff' }}>/</span>
+              <div style={{ marginBottom: '60px' }}>
+                <p style={{ fontFamily: "'Fira Code', monospace", fontSize: '40px', fontWeight: 500 }}>
+                  <span style={{ color: '#0015ff' }}>/</span>
                   <span style={{ color: '#000' }}>blog</span>
                 </p>
               </div>
@@ -164,10 +185,10 @@ const ShareCard = ({ post, onClose }) => {
               <div style={{ 
                 background: '#d9d9d9', 
                 border: '2px solid black',
-                borderRadius: '40px',
+                borderRadius: '52px',
                 overflow: 'hidden',
-                marginBottom: '40px',
-                height: '850px',
+                marginBottom: 'auto',
+                height: '708px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -188,52 +209,22 @@ const ShareCard = ({ post, onClose }) => {
                 )}
               </div>
               
-              {/* Blog Title */}
-              <h2 style={{ 
-                fontFamily: "'Fira Code', monospace", 
-                fontSize: '68px', 
-                fontWeight: 'normal',
-                color: '#000',
-                marginBottom: '30px',
-                lineHeight: '1.2',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical'
-              }}>
-                {post.title}
-              </h2>
-              
-              {/* Blog Excerpt */}
-              <p style={{ 
-                fontFamily: "'Fira Code', monospace", 
-                fontSize: '42px',
-                color: '#000',
-                marginBottom: '50px',
-                lineHeight: '1.4',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical'
-              }}>
-                {post.excerpt}
-              </p>
-              
               {/* CTA Button */}
-              <div style={{ marginTop: 'auto' }}>
+              <div style={{ marginTop: '60px' }}>
                 <div style={{ 
-                  background: '#000',
-                  borderRadius: '20px',
-                  padding: '30px 50px',
-                  display: 'inline-block'
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  borderRadius: '30px',
+                  padding: '30px 60px',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  textAlign: 'center'
                 }}>
                   <p style={{ 
                     fontFamily: "'Fira Code', monospace", 
-                    color: '#fff', 
-                    fontSize: '42px',
-                    textAlign: 'center',
+                    color: '#000', 
+                    fontSize: '48px',
+                    fontWeight: 600,
                     margin: 0
                   }}>
                     Click here to read
