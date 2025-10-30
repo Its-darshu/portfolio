@@ -84,14 +84,17 @@ export default function ShareCard({ post, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-background border-2 border-primary max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" 
+         style={{
+           background: 'radial-gradient(ellipse at top, #5b21b6 0%, #3b82f6 50%, #1e3a8a 100%)'
+         }}>
+      <div className="bg-background/95 backdrop-blur-xl border-2 border-primary max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl">
         {/* Header */}
-        <div className="border-b border-gray p-4 flex items-center justify-between sticky top-0 bg-background z-10">
-          <h3 className="text-white text-xl font-semibold">Share as Image</h3>
+        <div className="border-b border-gray/30 p-4 flex items-center justify-between sticky top-0 bg-background/90 backdrop-blur-md z-10">
+          <h3 className="text-white text-xl font-semibold">📸 Share as Instagram Story</h3>
           <button
             onClick={onClose}
-            className="text-gray hover:text-white transition-colors"
+            className="text-gray hover:text-white transition-colors hover:rotate-90 transform duration-300"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -101,16 +104,21 @@ export default function ShareCard({ post, onClose }) {
 
         {/* Preview Card */}
         <div className="p-6">
-          <p className="text-gray text-sm mb-4">✨ Preview your Instagram Story design:</p>
+          <p className="text-gray text-sm mb-6 text-center">✨ Preview your Instagram Story design</p>
           
-          <div
-            id="share-card-preview"
-            className="w-[360px] h-[640px] mx-auto flex flex-col relative overflow-hidden"
-            style={{ 
-              aspectRatio: '9/16',
-              background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
-            }}
-          >
+          {/* Phone Frame with Gradient Border */}
+          <div className="relative w-[380px] h-[660px] mx-auto p-[3px] rounded-[40px]"
+               style={{
+                 background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 25%, #f97316 50%, #fbbf24 75%, #a855f7 100%)'
+               }}>
+            {/* Inner Phone Content */}
+            <div
+              id="share-card-preview"
+              className="w-full h-full flex flex-col relative overflow-hidden rounded-[37px]"
+              style={{ 
+                background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
+              }}
+            >
             {/* Story Progress Bar */}
             <div className="absolute top-2 left-4 right-4 flex gap-1 z-30">
               <div className="flex-1 h-0.5 bg-white/30 rounded-full overflow-hidden">
@@ -216,6 +224,7 @@ export default function ShareCard({ post, onClose }) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
+            </div>
             </div>
           </div>
         </div>
