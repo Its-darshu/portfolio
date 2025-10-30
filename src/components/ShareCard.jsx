@@ -84,13 +84,9 @@ const ShareCard = ({ post, onClose }) => {
 
         {/* Instagram Story Card Preview - Visible */}
         <div className="mb-6 w-full aspect-[9/16] bg-white rounded-lg overflow-hidden relative">
-          {/* Background Image - using post image as background */}
+          {/* Nature Background Image */}
           <div className="absolute inset-0">
-            {post.image ? (
-              <img src={post.image} alt="Background" className="w-full h-full object-cover blur-sm" crossOrigin="anonymous" />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-green-200 via-blue-200 to-purple-200"></div>
-            )}
+            <img src="/nature image.svg" alt="Nature Background" className="w-full h-full object-cover" />
           </div>
           
           {/* Glassmorphism Card */}
@@ -104,7 +100,7 @@ const ShareCard = ({ post, onClose }) => {
             </div>
             
             {/* Blog Image */}
-            <div className="bg-gray-300 border border-black rounded-[26px] overflow-hidden mb-auto" style={{ height: '45%' }}>
+            <div className="bg-gray-300 border border-black rounded-[26px] overflow-hidden flex-shrink-0" style={{ height: '38%' }}>
               {post.image ? (
                 <img src={post.image} alt={post.title} className="w-full h-full object-cover" crossOrigin="anonymous" />
               ) : (
@@ -112,8 +108,21 @@ const ShareCard = ({ post, onClose }) => {
               )}
             </div>
             
+            {/* Blog Content */}
+            <div className="flex-1 flex flex-col justify-center py-2 px-2">
+              {/* Blog Title */}
+              <h2 className="font-mono text-[10px] font-bold text-black mb-1 line-clamp-2 leading-tight">
+                {post.title}
+              </h2>
+              
+              {/* Blog Excerpt */}
+              <p className="font-mono text-[8px] text-black/80 line-clamp-3 leading-tight">
+                {post.excerpt}
+              </p>
+            </div>
+            
             {/* CTA Button */}
-            <div className="mt-2">
+            <div className="mt-auto">
               <div className="bg-white/10 backdrop-blur-sm rounded-[15px] px-3 py-2 border border-white/20">
                 <p className="font-mono font-semibold text-black text-xs text-center">Click here to read</p>
               </div>
@@ -133,28 +142,18 @@ const ShareCard = ({ post, onClose }) => {
               fontFamily: "'Fira Code', monospace"
             }}
           >
-            {/* Background Image - full bleed with blur */}
+            {/* Nature Background Image */}
             <div style={{ position: 'absolute', inset: 0 }}>
-              {post.image ? (
-                <img 
-                  src={post.image} 
-                  alt="Background"
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'cover',
-                    filter: 'blur(20px)',
-                    transform: 'scale(1.1)'
-                  }} 
-                  crossOrigin="anonymous"
-                />
-              ) : (
-                <div style={{ 
+              <img 
+                src="/nature image.svg"
+                alt="Nature Background"
+                style={{ 
                   width: '100%', 
                   height: '100%', 
-                  background: 'linear-gradient(to bottom right, #86efac, #93c5fd, #c4b5fd)' 
-                }}></div>
-              )}
+                  objectFit: 'cover'
+                }} 
+                crossOrigin="anonymous"
+              />
             </div>
             
             {/* Glassmorphism Card */}
@@ -164,7 +163,7 @@ const ShareCard = ({ post, onClose }) => {
               left: '71px',
               right: '71px',
               bottom: '170px',
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'rgba(255, 255, 255, 0.02)',
               backdropFilter: 'blur(40px)',
               WebkitBackdropFilter: 'blur(40px)',
               borderRadius: '91px',
@@ -187,11 +186,11 @@ const ShareCard = ({ post, onClose }) => {
                 border: '2px solid black',
                 borderRadius: '52px',
                 overflow: 'hidden',
-                marginBottom: 'auto',
                 height: '708px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                flexShrink: 0
               }}>
                 {post.image ? (
                   <img 
@@ -209,8 +208,49 @@ const ShareCard = ({ post, onClose }) => {
                 )}
               </div>
               
+              {/* Blog Content - Title and Excerpt */}
+              <div style={{ 
+                flex: 1, 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center',
+                padding: '40px 20px'
+              }}>
+                {/* Blog Title */}
+                <h2 style={{ 
+                  fontFamily: "'Fira Code', monospace", 
+                  fontSize: '52px', 
+                  fontWeight: 'bold',
+                  color: '#000',
+                  marginBottom: '20px',
+                  lineHeight: '1.2',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical'
+                }}>
+                  {post.title}
+                </h2>
+                
+                {/* Blog Excerpt */}
+                <p style={{ 
+                  fontFamily: "'Fira Code', monospace", 
+                  fontSize: '36px',
+                  color: 'rgba(0, 0, 0, 0.8)',
+                  lineHeight: '1.4',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical'
+                }}>
+                  {post.excerpt}
+                </p>
+              </div>
+              
               {/* CTA Button */}
-              <div style={{ marginTop: '60px' }}>
+              <div style={{ marginTop: 'auto' }}>
                 <div style={{ 
                   background: 'rgba(255, 255, 255, 0.1)',
                   backdropFilter: 'blur(20px)',
