@@ -91,7 +91,7 @@ export default function ShareCard({ post, onClose }) {
       <div className="bg-background/95 backdrop-blur-xl border-2 border-primary max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl">
         {/* Header */}
         <div className="border-b border-gray/30 p-4 flex items-center justify-between sticky top-0 bg-background/90 backdrop-blur-md z-10">
-          <h3 className="text-white text-xl font-semibold">📸 Share as Instagram Story</h3>
+          <h3 className="text-white text-xl font-semibold">📸 Share Blog Post</h3>
           <button
             onClick={onClose}
             className="text-gray hover:text-white transition-colors hover:rotate-90 transform duration-300"
@@ -104,117 +104,75 @@ export default function ShareCard({ post, onClose }) {
 
         {/* Preview Card */}
         <div className="p-6">
-          <p className="text-gray text-sm mb-6 text-center">✨ Preview your Instagram Story design</p>
+          <p className="text-gray text-sm mb-6 text-center">Preview your blog card</p>
           
-          {/* Phone Frame with Gradient Border - exactly matching Figma */}
+          {/* Phone Frame with Gradient Border - Clean Card Design */}
           <div className="relative w-[320px] h-[640px] mx-auto p-[4px] rounded-[40px]"
                style={{
                  background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 25%, #ec4899 50%, #f97316 75%, #fbbf24 100%)'
                }}>
-            {/* Inner Phone Content */}
+            {/* Inner Phone Content - Clean Blog Card */}
             <div
               id="share-card-preview"
-              className="w-full h-full flex flex-col relative overflow-hidden rounded-[36px] bg-black"
+              className="w-full h-full flex flex-col relative overflow-hidden rounded-[36px] bg-black p-8 justify-center"
             >
-            {/* Story Progress Bar */}
-            <div className="absolute top-3 left-4 right-4 flex gap-1 z-30">
-              <div className="flex-1 h-0.5 bg-white/30 rounded-full overflow-hidden">
-                <div className="h-full w-full bg-white rounded-full"></div>
-              </div>
-            </div>
-
-            {/* Profile Header */}
-            <div className="absolute top-8 left-4 right-4 flex items-center justify-between z-20">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 p-[2px]">
-                  <div className="w-full h-full rounded-full bg-black flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">D</span>
-                  </div>
-                </div>
-                <div className="text-white text-xs font-medium drop-shadow-lg">darsha.dev</div>
-                <div className="text-white/70 text-xs">• 1h</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <button className="text-white/90 hover:text-white">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col justify-center p-4 pt-16 pb-16">
-              {/* Featured Image with subtle border */}
-              <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-4 border border-white/10">
-                {post.image ? (
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover"
-                    crossOrigin="anonymous"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-white/20">
-                    <svg className="w-16 h-16 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                )}
-              </div>
-
-              {/* Content Card */}
-              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-white/20">
-                {/* Blog Title */}
-                <h2 className="text-gray-900 text-lg font-bold mb-2 line-clamp-2 leading-tight">
-                  {post.title}
-                </h2>
-
-                {/* Excerpt */}
-                <p className="text-gray-600 text-xs mb-3 line-clamp-2 leading-relaxed">
-                  {post.excerpt || 'Read my latest blog post and discover insights about web development, design, and technology.'}
-                </p>
-
-                {/* Date and Tags */}
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
-                  <span className="text-gray-500 text-xs">📅 {post.date}</span>
-                  {post.tags && post.tags.length > 0 && (
-                    <>
-                      <span className="text-gray-400">•</span>
-                      <span className="text-primary text-xs font-medium">#{post.tags[0]}</span>
-                    </>
+              {/* Blog Card Content Only */}
+              <div className="flex flex-col items-center text-center space-y-6">
+                
+                {/* Featured Image */}
+                <div className="w-full h-48 rounded-2xl overflow-hidden border border-white/10">
+                  {post.image ? (
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover"
+                      crossOrigin="anonymous"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-white/20">
+                      <svg className="w-16 h-16 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
                   )}
                 </div>
 
-                {/* CTA Button */}
-                <div className="relative">
-                  <button className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary text-white rounded-xl py-2.5 text-sm font-semibold shadow-lg transition-all duration-300">
-                    Read Full Article →
-                  </button>
+                {/* Content Card */}
+                <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-white/20 w-full">
+                  {/* Blog Title */}
+                  <h2 className="text-gray-900 text-xl font-bold mb-3 line-clamp-2 leading-tight">
+                    {post.title}
+                  </h2>
+
+                  {/* Excerpt */}
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                    {post.excerpt || 'Read my latest blog post and discover insights about web development, design, and technology.'}
+                  </p>
+
+                  {/* Date and Tags */}
+                  <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
+                    <span className="text-gray-500 text-sm">📅 {post.date}</span>
+                    {post.tags && post.tags.length > 0 && (
+                      <>
+                        <span className="text-gray-400">•</span>
+                        <span className="text-primary text-sm font-medium">#{post.tags[0]}</span>
+                      </>
+                    )}
+                  </div>
+
+                  {/* CTA Button */}
+                  <div className="relative">
+                    <button className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary text-white rounded-xl py-3 text-sm font-semibold shadow-lg transition-all duration-300">
+                      Read Full Article →
+                    </button>
+                  </div>
+                </div>
+
+                {/* Website Attribution */}
+                <div className="text-white/80 text-sm font-medium">
+                  darsha.dev
                 </div>
               </div>
-            </div>
-
-            {/* Bottom Action Bar */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 z-20">
-              <div className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-2 flex items-center">
-                <input
-                  type="text"
-                  placeholder="Send message..."
-                  className="flex-1 bg-transparent text-white text-xs placeholder-white/60 outline-none"
-                  readOnly
-                />
-              </div>
-              <button className="w-9 h-9 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              </button>
-              <button className="w-9 h-9 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-              </button>
             </div>
             </div>
           </div>
