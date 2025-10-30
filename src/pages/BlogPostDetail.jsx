@@ -5,14 +5,12 @@ import { doc, getDoc } from 'firebase/firestore';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useMetaTags } from '../hooks/useMetaTags';
-import ShareCard from '../components/ShareCard';
 
 export default function BlogPostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showShareCard, setShowShareCard] = useState(false);
 
   // Update meta tags when post loads
   useMetaTags({
@@ -146,17 +144,6 @@ export default function BlogPostDetail() {
           <div>
             <p className="text-white text-sm font-semibold mb-2">Share this post</p>
             <div className="flex gap-3">
-              {/* Share as Image Button */}
-              <button
-                onClick={() => setShowShareCard(true)}
-                className="border-2 border-primary px-6 py-2 text-white hover:bg-primary/10 transition-colors flex items-center gap-2 font-medium"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                Share as Image
-              </button>
-
               {/* Quick Share Links */}
               <a
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
@@ -191,11 +178,6 @@ export default function BlogPostDetail() {
           </button>
         </div>
       </div>
-
-      {/* Share Card Modal */}
-      {showShareCard && (
-        <ShareCard post={post} onClose={() => setShowShareCard(false)} />
-      )}
     </div>
   );
 }
