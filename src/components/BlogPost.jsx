@@ -56,6 +56,7 @@ export default function BlogPost({ post }) {
       <div className="md:w-[180px] w-full p-6 border-t md:border-t-0 md:border-l border-gray flex md:flex-col flex-row md:items-end items-center justify-between md:justify-start gap-2 text-gray text-sm flex-shrink-0">
         <div className="text-right">
           <div className="text-white font-medium mb-1">{post.date}</div>
+          {post.time && <div className="text-primary text-xs mb-1">{post.time}</div>}
           <div>{post.readTime} min read</div>
         </div>
       </div>

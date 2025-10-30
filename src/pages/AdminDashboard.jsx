@@ -182,6 +182,7 @@ export default function AdminDashboard() {
           + '-' + Date.now(); // Add timestamp to ensure uniqueness
       };
 
+      const now = new Date();
       const postData = {
         title: formData.title,
         excerpt: formData.excerpt,
@@ -189,10 +190,15 @@ export default function AdminDashboard() {
         image: formData.image,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
         readTime: parseInt(formData.readTime),
-        date: new Date().toLocaleDateString('en-US', { 
+        date: now.toLocaleDateString('en-US', { 
           month: 'short', 
           day: 'numeric', 
           year: 'numeric' 
+        }),
+        time: now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
         }),
         timestamp: Date.now()
       };
