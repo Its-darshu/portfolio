@@ -4,7 +4,7 @@ import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useMetaTags } from '../hooks/useMetaTags';
+import { useMetaTags } from '../hooks/useMetaTags.jsx';
 import ShareCard from '../components/ShareCard';
 
 export default function BlogPostDetail() {
@@ -13,16 +13,6 @@ export default function BlogPostDetail() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showShareCard, setShowShareCard] = useState(false);
-
-  // Update meta tags when post loads - use proper blog post URL
-  useMetaTags({
-    title: post?.title || 'Blog Post',
-    description: post?.excerpt || 'Read my latest blog post',
-    image: post?.image || 'https://darsha.dev/og-image.png',
-    url: post ? `${window.location.origin}/blog/${id}` : window.location.href,
-    type: 'article',
-    tags: post?.tags || []
-  });
 
   useEffect(() => {
     loadPost();
@@ -73,6 +63,16 @@ export default function BlogPostDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Meta Tags for SEO and Social Sharing */}
+      {useMetaTags({
+        title: post.title,
+        description: post.excerpt,
+        image: post.image || 'https://darsha.dev/og-image.png',
+        url: `${window.location.origin}/blog/${id}`,
+        type: 'article',
+        tags: post.tags || []
+      })}
+      
       {/* Header */}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <button
@@ -148,7 +148,7 @@ export default function BlogPostDetail() {
             <div className="flex gap-3">
               {/* Quick Share Links */}
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${window.location.origin}/blog/${post.id}`)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://darsha.dev/blog/${id}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
@@ -159,7 +159,7 @@ export default function BlogPostDetail() {
                 </svg>
               </a>
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${window.location.origin}/blog/${post.id}`)}`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://darsha.dev/blog/${id}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
