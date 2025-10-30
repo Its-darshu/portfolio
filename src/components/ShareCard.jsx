@@ -86,7 +86,7 @@ export default function ShareCard({ post, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" 
          style={{
-           background: 'radial-gradient(ellipse at top, #5b21b6 0%, #3b82f6 50%, #1e3a8a 100%)'
+           background: 'radial-gradient(ellipse at center, #8b5cf6 0%, #3b82f6 40%, #1e40af 80%, #1e1b4b 100%)'
          }}>
       <div className="bg-background/95 backdrop-blur-xl border-2 border-primary max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl">
         {/* Header */}
@@ -106,31 +106,28 @@ export default function ShareCard({ post, onClose }) {
         <div className="p-6">
           <p className="text-gray text-sm mb-6 text-center">✨ Preview your Instagram Story design</p>
           
-          {/* Phone Frame with Gradient Border */}
-          <div className="relative w-[380px] h-[660px] mx-auto p-[3px] rounded-[40px]"
+          {/* Phone Frame with Gradient Border - exactly matching Figma */}
+          <div className="relative w-[320px] h-[640px] mx-auto p-[4px] rounded-[40px]"
                style={{
-                 background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 25%, #f97316 50%, #fbbf24 75%, #a855f7 100%)'
+                 background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 25%, #ec4899 50%, #f97316 75%, #fbbf24 100%)'
                }}>
             {/* Inner Phone Content */}
             <div
               id="share-card-preview"
-              className="w-full h-full flex flex-col relative overflow-hidden rounded-[37px]"
-              style={{ 
-                background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
-              }}
+              className="w-full h-full flex flex-col relative overflow-hidden rounded-[36px] bg-black"
             >
             {/* Story Progress Bar */}
-            <div className="absolute top-2 left-4 right-4 flex gap-1 z-30">
+            <div className="absolute top-3 left-4 right-4 flex gap-1 z-30">
               <div className="flex-1 h-0.5 bg-white/30 rounded-full overflow-hidden">
                 <div className="h-full w-full bg-white rounded-full"></div>
               </div>
             </div>
 
             {/* Profile Header */}
-            <div className="absolute top-6 left-4 right-4 flex items-center justify-between z-20">
+            <div className="absolute top-8 left-4 right-4 flex items-center justify-between z-20">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 p-[2px]">
-                  <div className="w-full h-full rounded-full bg-[#1a1a2e] flex items-center justify-center">
+                  <div className="w-full h-full rounded-full bg-black flex items-center justify-center">
                     <span className="text-white text-xs font-bold">D</span>
                   </div>
                 </div>
@@ -147,10 +144,9 @@ export default function ShareCard({ post, onClose }) {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col justify-center p-5 pt-16 pb-20">
-              {/* Featured Image with gradient overlay */}
-              <div className="relative w-full h-64 rounded-2xl overflow-hidden mb-4 shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
+            <div className="flex-1 flex flex-col justify-center p-4 pt-16 pb-16">
+              {/* Featured Image with subtle border */}
+              <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-4 border border-white/10">
                 {post.image ? (
                   <img
                     src={post.image}
@@ -159,8 +155,8 @@ export default function ShareCard({ post, onClose }) {
                     crossOrigin="anonymous"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-                    <svg className="w-20 h-20 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-full h-full bg-gradient-to-br from-purple-600/20 to-blue-600/20 flex items-center justify-center border border-white/20">
+                    <svg className="w-16 h-16 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
@@ -168,19 +164,19 @@ export default function ShareCard({ post, onClose }) {
               </div>
 
               {/* Content Card */}
-              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 shadow-2xl">
+              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-white/20">
                 {/* Blog Title */}
                 <h2 className="text-gray-900 text-lg font-bold mb-2 line-clamp-2 leading-tight">
                   {post.title}
                 </h2>
 
                 {/* Excerpt */}
-                <p className="text-gray-600 text-xs mb-3 line-clamp-3 leading-relaxed">
+                <p className="text-gray-600 text-xs mb-3 line-clamp-2 leading-relaxed">
                   {post.excerpt || 'Read my latest blog post and discover insights about web development, design, and technology.'}
                 </p>
 
                 {/* Date and Tags */}
-                <div className="flex items-center gap-2 mb-4 flex-wrap">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
                   <span className="text-gray-500 text-xs">📅 {post.date}</span>
                   {post.tags && post.tags.length > 0 && (
                     <>
@@ -192,21 +188,16 @@ export default function ShareCard({ post, onClose }) {
 
                 {/* CTA Button */}
                 <div className="relative">
-                  <button className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary text-white rounded-xl py-3 text-sm font-semibold shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                  <button className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-primary text-white rounded-xl py-2.5 text-sm font-semibold shadow-lg transition-all duration-300">
                     Read Full Article →
                   </button>
-                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-3/4 h-3 bg-primary/20 blur-lg rounded-full"></div>
                 </div>
               </div>
-
-              {/* Decorative Elements */}
-              <div className="absolute top-1/4 -left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-1/4 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
             </div>
 
             {/* Bottom Action Bar */}
             <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 z-20">
-              <div className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2.5 flex items-center">
+              <div className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-2 flex items-center">
                 <input
                   type="text"
                   placeholder="Send message..."
@@ -214,13 +205,13 @@ export default function ShareCard({ post, onClose }) {
                   readOnly
                 />
               </div>
-              <button className="w-10 h-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button className="w-9 h-9 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
               </button>
-              <button className="w-10 h-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button className="w-9 h-9 bg-white/10 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
