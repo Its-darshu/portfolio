@@ -32,10 +32,16 @@ export default async function handler(req, res) {
     }
 
     const post = doc.data();
-    const baseUrl = process.env.VERCEL_URL || 'https://darsha.dev';
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://darsha.dev';
     const postUrl = `${baseUrl}/blog/${id}`;
 
     // Generate HTML with proper meta tags
+    // Escape all user-provided content
+    const safeTitle = escapeHtml(post.title || '');
+    const safeExcerpt = escapeHtml(post.excerpt || '');
+    const safeImage = escapeHtml(post.image || `${baseUrl}/og-image.png`);
+    const safePostUrl = escapeHtml(postUrl);
+
     const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -44,37 +50,36 @@ export default async function handler(req, res) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Primary Meta Tags -->
-    <title>${post.title} | Darshan</title>
-    <meta name="title" content="${post.title}">
-    <meta name="description" content="${post.excerpt}">
+    <title>${safeTitle} | Darshan</title>
+    <meta name="title" content="${safeTitle}">
+    <meta name="description" content="${safeExcerpt}">
     
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="${postUrl}">
-    <meta property="og:title" content="${post.title}">
-    <meta property="og:description" content="${post.excerpt}">
-    <meta property="og:image" content="${post.image || `${baseUrl}/og-image.png`}">
+    <meta property="og:url" content="${safePostUrl}">
+    <meta property="og:title" content="${safeTitle}">
+    <meta property="og:description" content="${safeExcerpt}">
+    <meta property="og:image" content="${safeImage}">
     <meta property="og:site_name" content="Darshan - Portfolio">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="${postUrl}">
-    <meta property="twitter:title" content="${post.title}">
-    <meta property="twitter:description" content="${post.excerpt}">
-    <meta property="twitter:image" content="${post.image || `${baseUrl}/og-image.png`}">
+    <meta property="twitter:url" content="${safePostUrl}">
+    <meta property="twitter:title" content="${safeTitle}">
+    <meta property="twitter:description" content="${safeExcerpt}">
+    <meta property="twitter:image" content="${safeImage}">
     
     <!-- Redirect to actual blog post -->
-    <meta http-equiv="refresh" content="0; url=${postUrl}">
-    <script>window.location.href = '${postUrl}';</script>
+    <meta http-equiv="refresh" content="0; url=${safePostUrl}">
+    <script>window.location.href = '${safePostUrl}';</script>
 </head>
 <body>
-    <p>Redirecting to <a href="${postUrl}">${post.title}</a>...</p>
+    <p>Redirecting to <a href="${safePostUrl}">${safeTitle}</a>...</p>
 </body>
 </html>
     `;
-
     res.setHeader('Content-Type', 'text/html');
     res.status(200).send(html);
   } catch (error) {

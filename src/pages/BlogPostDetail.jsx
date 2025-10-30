@@ -68,8 +68,7 @@ export default function BlogPostDetail() {
         title: post.title,
         description: post.excerpt,
         image: post.image || 'https://darsha.dev/og-image.png',
-        url: `${window.location.origin}/blog/${id}`,
-        type: 'article',
+        url: `${window.location.origin}/blog/${id}`,        type: 'article',
         tags: post.tags || []
       })}
       
@@ -148,7 +147,7 @@ export default function BlogPostDetail() {
             <div className="flex gap-3">
               {/* Quick Share Links */}
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://darsha.dev/blog/${id}`)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${window.location.origin}/blog/${id}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
@@ -159,7 +158,7 @@ export default function BlogPostDetail() {
                 </svg>
               </a>
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://darsha.dev/blog/${id}`)}`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${window.location.origin}/blog/${id}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
