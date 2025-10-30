@@ -4,12 +4,25 @@ import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { useMetaTags } from '../hooks/useMetaTags';
+import ShareCard from '../components/ShareCard';
 
 export default function BlogPostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showShareCard, setShowShareCard] = useState(false);
+
+  // Update meta tags when post loads
+  useMetaTags({
+    title: post?.title || 'Blog Post',
+    description: post?.excerpt || 'Read my latest blog post',
+    image: post?.image || 'https://darsha.dev/og-image.png',
+    url: window.location.href,
+    type: 'article',
+    tags: post?.tags || []
+  });
 
   useEffect(() => {
     loadPost();
@@ -133,12 +146,24 @@ export default function BlogPostDetail() {
           <div>
             <p className="text-white text-sm font-semibold mb-2">Share this post</p>
             <div className="flex gap-3">
+              {/* Share as Image Button */}
+              <button
+                onClick={() => setShowShareCard(true)}
+                className="border-2 border-primary px-6 py-2 text-white hover:bg-primary/10 transition-colors flex items-center gap-2 font-medium"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Share as Image
+              </button>
+
+              {/* Quick Share Links */}
               <a
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray hover:text-primary transition-colors"
-                title="Share on Twitter"
+                className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
+                title="Share link on X"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -148,8 +173,8 @@ export default function BlogPostDetail() {
                 href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray hover:text-primary transition-colors"
-                title="Share on LinkedIn"
+                className="text-gray hover:text-primary transition-colors p-2 border border-gray hover:border-primary"
+                title="Share link on LinkedIn"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -166,6 +191,11 @@ export default function BlogPostDetail() {
           </button>
         </div>
       </div>
+
+      {/* Share Card Modal */}
+      {showShareCard && (
+        <ShareCard post={post} onClose={() => setShowShareCard(false)} />
+      )}
     </div>
   );
 }
