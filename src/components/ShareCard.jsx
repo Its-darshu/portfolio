@@ -13,10 +13,12 @@ const ShareCard = ({ post, onClose }) => {
       if (cardRef.current) {
         const canvas = await html2canvas(cardRef.current, {
           scale: 2,
-          backgroundColor: null,
+          backgroundColor: '#110540',
           logging: false,
           width: 1080,
           height: 1920,
+          useCORS: true,
+          allowTaint: true,
         });
 
         // Convert canvas to blob
@@ -67,8 +69,8 @@ const ShareCard = ({ post, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-      <div className="bg-dark-bg rounded-lg p-6 max-w-md w-full relative">
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-auto">
+      <div className="bg-dark-bg rounded-lg p-6 max-w-md w-full relative my-8">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray hover:text-white transition-colors z-10"
@@ -81,37 +83,40 @@ const ShareCard = ({ post, onClose }) => {
         <h3 className="text-xl font-bold text-white mb-4">Instagram Story Preview</h3>
 
         {/* Instagram Story Card Preview - Visible */}
-        <div className="mb-6 w-full aspect-[9/16] bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 rounded-lg overflow-hidden relative">
-          {/* Decorative background */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full blur-2xl"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500 rounded-full blur-2xl"></div>
-          </div>
-
-          {/* Preview Content */}
-          <div className="relative h-full flex flex-col justify-between p-6">
-            <div className="space-y-2">
-              <div className="text-xs text-blue-300 font-medium tracking-wider uppercase">NEW BLOG POST</div>
-              <h2 className="text-lg font-bold text-white leading-tight line-clamp-3">{post.title}</h2>
+        <div className="mb-6 w-full aspect-[9/16] bg-gradient-to-br from-[#110540] via-purple-900 to-blue-900 rounded-lg overflow-hidden relative">
+          {/* Decorative background blur effects */}
+          <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-600 rounded-full blur-[100px] opacity-30"></div>
+          <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-purple-600 rounded-full blur-[100px] opacity-30"></div>
+          
+          {/* Phone Frame */}
+          <div className="absolute inset-[5%] bg-gradient-to-b from-yellow-200 via-yellow-400 to-orange-400 rounded-[25px] shadow-lg flex flex-col p-4">
+            {/* /blog label */}
+            <div className="mb-2">
+              <p className="font-mono text-xs">
+                <span className="text-blue-600">/</span>
+                <span className="text-black">blog</span>
+              </p>
             </div>
             
-            <div className="flex-1 flex items-center">
-              <p className="text-sm text-gray-200 line-clamp-4">{post.excerpt}</p>
+            {/* Blog Image */}
+            <div className="bg-gray-300 border border-black rounded-[15px] overflow-hidden mb-2" style={{ height: '45%' }}>
+              {post.image ? (
+                <img src={post.image} alt={post.title} className="w-full h-full object-cover" crossOrigin="anonymous" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs">No Image</div>
+              )}
             </div>
             
-            <div className="space-y-2">
-              <div className="h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-white font-bold text-sm">Darshan</div>
-                  <div className="text-blue-300 text-xs">darshan99806@gmail.com</div>
-                </div>
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">D</span>
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-blue-300 text-xs">darsha.dev/blog</div>
+            {/* Blog Title */}
+            <h2 className="font-mono text-sm font-semibold text-black mb-1 line-clamp-2">{post.title}</h2>
+            
+            {/* Blog Excerpt */}
+            <p className="font-mono text-xs text-black mb-2 line-clamp-2">{post.excerpt}</p>
+            
+            {/* CTA Button */}
+            <div className="mt-auto">
+              <div className="bg-black rounded-lg px-3 py-1.5">
+                <p className="font-mono text-white text-xs text-center">Click here to read</p>
               </div>
             </div>
           </div>
@@ -124,52 +129,115 @@ const ShareCard = ({ post, onClose }) => {
             style={{ 
               width: '1080px', 
               height: '1920px',
-              background: 'linear-gradient(to bottom right, #581c87, #312e81, #1e3a8a)'
+              background: '#110540',
+              position: 'relative',
+              fontFamily: "'Fira Code', monospace"
             }}
           >
-            {/* Decorative background elements */}
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.2 }}>
-              <div style={{ position: 'absolute', top: 0, right: 0, width: '400px', height: '400px', background: '#3b82f6', borderRadius: '50%', filter: 'blur(100px)' }}></div>
-              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '400px', height: '400px', background: '#a855f7', borderRadius: '50%', filter: 'blur(100px)' }}></div>
-            </div>
-
-            {/* Content */}
-            <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '100px' }}>
-              {/* Top Section */}
-              <div>
-                <div style={{ fontSize: '48px', color: '#93c5fd', fontWeight: 'bold', letterSpacing: '0.1em', marginBottom: '40px' }}>
-                  NEW BLOG POST
-                </div>
-                <h2 style={{ fontSize: '96px', fontWeight: 'bold', color: 'white', lineHeight: '1.1', marginBottom: '40px' }}>
-                  {post.title}
-                </h2>
-              </div>
-
-              {/* Middle Section */}
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '60px 0' }}>
-                <p style={{ fontSize: '52px', color: '#e5e7eb', lineHeight: '1.6' }}>
-                  {post.excerpt}
+            {/* Decorative background blur effects */}
+            <div style={{ position: 'absolute', top: '-20%', left: '-10%', width: '60%', height: '60%', background: '#2563eb', borderRadius: '50%', filter: 'blur(200px)', opacity: 0.3 }}></div>
+            <div style={{ position: 'absolute', bottom: '-20%', right: '-10%', width: '60%', height: '60%', background: '#9333ea', borderRadius: '50%', filter: 'blur(200px)', opacity: 0.3 }}></div>
+            
+            {/* Phone Frame */}
+            <div style={{ 
+              position: 'absolute', 
+              top: '5%', 
+              left: '5%', 
+              right: '5%', 
+              bottom: '5%', 
+              background: 'linear-gradient(to bottom, #fef08a, #facc15, #fb923c)',
+              borderRadius: '60px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '80px'
+            }}>
+              {/* /blog label */}
+              <div style={{ marginBottom: '40px' }}>
+                <p style={{ fontFamily: "'Fira Code', monospace", fontSize: '48px', fontWeight: 500 }}>
+                  <span style={{ color: '#0004ff' }}>/</span>
+                  <span style={{ color: '#000' }}>blog</span>
                 </p>
               </div>
-
-              {/* Bottom Section */}
-              <div>
-                <div style={{ height: '4px', background: 'linear-gradient(to right, transparent, #60a5fa, transparent)', marginBottom: '40px' }}></div>
-                
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
-                  <div>
-                    <div style={{ color: 'white', fontWeight: 'bold', fontSize: '64px' }}>Darshan</div>
-                    <div style={{ color: '#93c5fd', fontSize: '42px', marginTop: '10px' }}>darshan99806@gmail.com</div>
-                  </div>
-                  
-                  <div style={{ width: '160px', height: '160px', background: 'linear-gradient(to bottom right, #60a5fa, #a855f7)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: '80px' }}>D</span>
-                  </div>
-                </div>
-
-                <div style={{ textAlign: 'center', paddingTop: '20px' }}>
-                  <div style={{ color: '#93c5fd', fontSize: '42px', fontWeight: 'bold' }}>Read the full article</div>
-                  <div style={{ color: 'white', fontSize: '36px', marginTop: '15px' }}>darsha.dev/blog</div>
+              
+              {/* Blog Image */}
+              <div style={{ 
+                background: '#d9d9d9', 
+                border: '2px solid black',
+                borderRadius: '40px',
+                overflow: 'hidden',
+                marginBottom: '40px',
+                height: '850px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                {post.image ? (
+                  <img 
+                    src={post.image} 
+                    alt={post.title} 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover' 
+                    }} 
+                    crossOrigin="anonymous"
+                  />
+                ) : (
+                  <div style={{ color: '#666', fontSize: '36px' }}>No Image</div>
+                )}
+              </div>
+              
+              {/* Blog Title */}
+              <h2 style={{ 
+                fontFamily: "'Fira Code', monospace", 
+                fontSize: '68px', 
+                fontWeight: 'normal',
+                color: '#000',
+                marginBottom: '30px',
+                lineHeight: '1.2',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical'
+              }}>
+                {post.title}
+              </h2>
+              
+              {/* Blog Excerpt */}
+              <p style={{ 
+                fontFamily: "'Fira Code', monospace", 
+                fontSize: '42px',
+                color: '#000',
+                marginBottom: '50px',
+                lineHeight: '1.4',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical'
+              }}>
+                {post.excerpt}
+              </p>
+              
+              {/* CTA Button */}
+              <div style={{ marginTop: 'auto' }}>
+                <div style={{ 
+                  background: '#000',
+                  borderRadius: '20px',
+                  padding: '30px 50px',
+                  display: 'inline-block'
+                }}>
+                  <p style={{ 
+                    fontFamily: "'Fira Code', monospace", 
+                    color: '#fff', 
+                    fontSize: '42px',
+                    textAlign: 'center',
+                    margin: 0
+                  }}>
+                    Click here to read
+                  </p>
                 </div>
               </div>
             </div>
@@ -199,8 +267,8 @@ const ShareCard = ({ post, onClose }) => {
           </button>
           
           <p className="text-xs text-gray-400 text-center">
-            📱 Mobile: Share directly to Instagram<br />
-            💻 Desktop: Download image, then upload to Instagram app on your phone
+            Mobile: Share directly to Instagram.<br />
+            Desktop: Download image, then upload to Instagram app on your phone.
           </p>
         </div>
       </div>
