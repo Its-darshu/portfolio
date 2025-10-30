@@ -37,11 +37,20 @@ export default async function handler(req, res) {
 
     // Generate HTML with proper meta tags
     // Escape all user-provided content
+function escapeHtml(unsafe) {
+  if (!unsafe) return '';
+  return String(unsafe)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
     const safeTitle = escapeHtml(post.title || '');
     const safeExcerpt = escapeHtml(post.excerpt || '');
     const safeImage = escapeHtml(post.image || `${baseUrl}/og-image.png`);
     const safePostUrl = escapeHtml(postUrl);
-
     const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -64,8 +73,7 @@ export default async function handler(req, res) {
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
+    <script>window.location.href = ${JSON.stringify(safePostUrl)};</script>    <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="${safePostUrl}">
     <meta property="twitter:title" content="${safeTitle}">
     <meta property="twitter:description" content="${safeExcerpt}">

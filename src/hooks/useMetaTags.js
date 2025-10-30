@@ -9,10 +9,13 @@ export const useMetaTags = ({
   tags = []
 }) => {
   if (!title) return null;
+  if (!description || !image || !url) {
+    console.warn('MetaTags: description, image, and url are required for proper SEO');
+    return null;
+  }
 
   const fullTitle = `${title} | Darshan`;
   const keywords = tags && tags.length > 0 ? tags.join(', ') : 'web design, full-stack developer, portfolio';
-
   return (
     <Helmet>
       {/* Basic meta tags */}
@@ -28,17 +31,16 @@ export const useMetaTags = ({
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
-export const useMetaTags = ({
+export const MetaTags = ({
   title,
   description,
   image,
   url,
   type = 'website',
   tags = [],
-  imageWidth = '1200',
-  imageHeight = '630'
-}) => {
-  if (!title) return null;
+  imageWidth = 1200,
+  imageHeight = 630
+}) => {  if (!title) return null;
 
   const fullTitle = `${title} | Darshan`;
   const keywords = tags && tags.length > 0 ? tags.join(', ') : 'web design, full-stack developer, portfolio';
