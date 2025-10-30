@@ -14,12 +14,12 @@ export default function BlogPostDetail() {
   const [loading, setLoading] = useState(true);
   const [showShareCard, setShowShareCard] = useState(false);
 
-  // Update meta tags when post loads
+  // Update meta tags when post loads - use proper blog post URL
   useMetaTags({
     title: post?.title || 'Blog Post',
     description: post?.excerpt || 'Read my latest blog post',
     image: post?.image || 'https://darsha.dev/og-image.png',
-    url: window.location.href,
+    url: post ? `${window.location.origin}/blog/${id}` : window.location.href,
     type: 'article',
     tags: post?.tags || []
   });
