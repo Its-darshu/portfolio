@@ -80,57 +80,96 @@ const ShareCard = ({ post, onClose }) => {
 
         <h3 className="text-xl font-bold text-white mb-4">Instagram Story Preview</h3>
 
-        {/* Instagram Story Card Preview */}
-        <div className="mb-6">
+        {/* Instagram Story Card Preview - Visible */}
+        <div className="mb-6 w-full aspect-[9/16] bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 rounded-lg overflow-hidden relative">
+          {/* Decorative background */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500 rounded-full blur-2xl"></div>
+          </div>
+
+          {/* Preview Content */}
+          <div className="relative h-full flex flex-col justify-between p-6">
+            <div className="space-y-2">
+              <div className="text-xs text-blue-300 font-medium tracking-wider uppercase">NEW BLOG POST</div>
+              <h2 className="text-lg font-bold text-white leading-tight line-clamp-3">{post.title}</h2>
+            </div>
+            
+            <div className="flex-1 flex items-center">
+              <p className="text-sm text-gray-200 line-clamp-4">{post.excerpt}</p>
+            </div>
+            
+            <div className="space-y-2">
+              <div className="h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-white font-bold text-sm">Darshan</div>
+                  <div className="text-blue-300 text-xs">darshan99806@gmail.com</div>
+                </div>
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">D</span>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-blue-300 text-xs">darsha.dev/blog</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Hidden High-Res Card for Generation */}
+        <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
           <div 
             ref={cardRef}
-            className="w-full aspect-[9/16] bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 rounded-lg overflow-hidden relative"
-            style={{ width: '1080px', height: '1920px', transform: 'scale(0.2)', transformOrigin: 'top left' }}
+            style={{ 
+              width: '1080px', 
+              height: '1920px',
+              background: 'linear-gradient(to bottom right, #581c87, #312e81, #1e3a8a)'
+            }}
           >
             {/* Decorative background elements */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500 rounded-full blur-3xl"></div>
+            <div style={{ position: 'absolute', inset: 0, opacity: 0.2 }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '400px', height: '400px', background: '#3b82f6', borderRadius: '50%', filter: 'blur(100px)' }}></div>
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '400px', height: '400px', background: '#a855f7', borderRadius: '50%', filter: 'blur(100px)' }}></div>
             </div>
 
             {/* Content */}
-            <div className="relative h-full flex flex-col justify-between p-20">
-              {/* Top Section - Blog Title */}
-              <div className="space-y-8">
-                <div className="text-3xl text-blue-300 font-bold tracking-wider uppercase">
+            <div style={{ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '100px' }}>
+              {/* Top Section */}
+              <div>
+                <div style={{ fontSize: '48px', color: '#93c5fd', fontWeight: 'bold', letterSpacing: '0.1em', marginBottom: '40px' }}>
                   NEW BLOG POST
                 </div>
-                <h2 className="text-7xl font-bold text-white leading-tight">
+                <h2 style={{ fontSize: '96px', fontWeight: 'bold', color: 'white', lineHeight: '1.1', marginBottom: '40px' }}>
                   {post.title}
                 </h2>
               </div>
 
-              {/* Middle Section - Excerpt */}
-              <div className="flex-1 flex items-center py-20">
-                <p className="text-4xl text-gray-200 leading-relaxed">
+              {/* Middle Section */}
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '60px 0' }}>
+                <p style={{ fontSize: '52px', color: '#e5e7eb', lineHeight: '1.6' }}>
                   {post.excerpt}
                 </p>
               </div>
 
-              {/* Bottom Section - Author/Brand */}
-              <div className="space-y-8">
-                <div className="h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+              {/* Bottom Section */}
+              <div>
+                <div style={{ height: '4px', background: 'linear-gradient(to right, transparent, #60a5fa, transparent)', marginBottom: '40px' }}></div>
                 
-                <div className="flex items-center justify-between">
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
                   <div>
-                    <div className="text-white font-bold text-5xl">Darshan</div>
-                    <div className="text-blue-300 text-3xl mt-2">darshan99806@gmail.com</div>
+                    <div style={{ color: 'white', fontWeight: 'bold', fontSize: '64px' }}>Darshan</div>
+                    <div style={{ color: '#93c5fd', fontSize: '42px', marginTop: '10px' }}>darshan99806@gmail.com</div>
                   </div>
                   
-                  {/* Logo or Icon */}
-                  <div className="w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-6xl">D</span>
+                  <div style={{ width: '160px', height: '160px', background: 'linear-gradient(to bottom right, #60a5fa, #a855f7)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ color: 'white', fontWeight: 'bold', fontSize: '80px' }}>D</span>
                   </div>
                 </div>
 
-                <div className="text-center pt-4">
-                  <div className="text-blue-300 text-3xl font-bold">Read the full article</div>
-                  <div className="text-white text-2xl mt-3">darsha.dev/blog</div>
+                <div style={{ textAlign: 'center', paddingTop: '20px' }}>
+                  <div style={{ color: '#93c5fd', fontSize: '42px', fontWeight: 'bold' }}>Read the full article</div>
+                  <div style={{ color: 'white', fontSize: '36px', marginTop: '15px' }}>darsha.dev/blog</div>
                 </div>
               </div>
             </div>
