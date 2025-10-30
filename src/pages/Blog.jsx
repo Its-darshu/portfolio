@@ -71,7 +71,7 @@ export default function Blog() {
             <p className="text-gray text-lg">No blog posts yet. Check back soon!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-6">
             {blogPosts.map((post) => (
               <BlogPost key={post.id} post={post} />
             ))}

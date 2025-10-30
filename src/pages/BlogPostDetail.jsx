@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function BlogPostDetail() {
   const { id } = useParams();
@@ -113,11 +115,14 @@ export default function BlogPostDetail() {
         {/* Divider */}
         <div className="w-full h-px bg-gray/30 mb-8"></div>
 
-        {/* Post Content */}
+        {/* Post Content (render Markdown) */}
         <article className="prose prose-invert max-w-none">
-          <div className="text-gray text-lg leading-relaxed whitespace-pre-wrap">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            className="text-gray text-lg leading-relaxed"
+          >
             {post.content}
-          </div>
+          </ReactMarkdown>
         </article>
 
         {/* Divider */}
