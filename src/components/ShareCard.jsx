@@ -13,11 +13,13 @@ export default function ShareCard({ post, onClose }) {
       
       // Generate canvas from the card
       const canvas = await html2canvas(cardElement, {
-        backgroundColor: '#1e1e1e',
+        backgroundColor: '#ffffff',
         scale: 2, // Higher quality
         logging: false,
         useCORS: true,
-        allowTaint: true
+        allowTaint: true,
+        width: 1080,
+        height: 1920
       });
 
       // Convert to blob
@@ -25,48 +27,39 @@ export default function ShareCard({ post, onClose }) {
         const file = new File([blob], `${post.title.slice(0, 30)}.png`, { type: 'image/png' });
 
         if (platform === 'instagram') {
-          // For Instagram - download the image
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${post.title.slice(0, 30)}-instagram.png`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          
-          alert('📸 Image downloaded! Upload it to Instagram Stories or Post.');
+          // Check if Web Share API is available (mobile)
+          if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+              await navigator.share({
+                files: [file],
+                title: post.title,
+                text: `Check out my blog post: ${post.title}`
+              });
+            } catch (shareError) {
+              if (shareError.name !== 'AbortError') {
+                // Fallback to download
+                downloadImage(blob, `${post.title.slice(0, 30)}-story.png`);
+                alert('📸 Image downloaded! Open Instagram and upload to your Story.');
+              }
+            }
+          } else {
+            // Desktop - download the image
+            downloadImage(blob, `${post.title.slice(0, 30)}-story.png`);
+            alert('📸 Image downloaded! Open Instagram on your phone and upload to Stories.');
+          }
         } else if (platform === 'linkedin') {
-          // For LinkedIn - open share dialog with downloaded image
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${post.title.slice(0, 30)}-linkedin.png`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          
-          // Open LinkedIn share with text
-          const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
-          window.open(linkedinUrl, '_blank');
-          
-          alert('📸 Image downloaded! Upload it to your LinkedIn post and share the link.');
+          downloadImage(blob, `${post.title.slice(0, 30)}-linkedin.png`);
+          setTimeout(() => {
+            const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
+            window.open(linkedinUrl, '_blank');
+          }, 500);
+          alert('📸 Image downloaded! Attach it to your LinkedIn post.');
         } else if (platform === 'twitter') {
-          // For Twitter - download and open composer
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${post.title.slice(0, 30)}-twitter.png`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          
-          // Open Twitter composer
-          const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + '\n\n' + window.location.href)}`;
-          window.open(twitterUrl, '_blank');
-          
+          downloadImage(blob, `${post.title.slice(0, 30)}-twitter.png`);
+          setTimeout(() => {
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title + '\n\n' + window.location.href)}`;
+            window.open(twitterUrl, '_blank');
+          }, 500);
           alert('📸 Image downloaded! Attach it to your tweet.');
         }
       }, 'image/png');
@@ -77,6 +70,17 @@ export default function ShareCard({ post, onClose }) {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const downloadImage = (blob, filename) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -97,80 +101,75 @@ export default function ShareCard({ post, onClose }) {
 
         {/* Preview Card */}
         <div className="p-6">
-          <p className="text-gray text-sm mb-4">Preview your share card:</p>
+          <p className="text-gray text-sm mb-4">Preview your Instagram Story:</p>
           
           <div
             id="share-card-preview"
-            className="w-full aspect-[1.91/1] bg-gradient-to-br from-background via-background to-primary/10 border-2 border-primary p-8 flex flex-col justify-between relative overflow-hidden"
+            className="w-[360px] h-[640px] mx-auto bg-white flex flex-col relative overflow-hidden"
+            style={{ aspectRatio: '9/16' }}
           >
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-0 left-0 w-full h-full"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300ff00' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                  backgroundSize: '60px 60px'
-                }}
+            {/* Profile Header */}
+            <div className="absolute top-4 left-4 right-4 flex items-center gap-3 z-20">
+              <div className="w-10 h-10 rounded-full border-2 border-primary bg-background flex items-center justify-center text-primary text-lg font-bold">
+                D
+              </div>
+              <div className="text-sm font-medium text-gray-800">darsha.dev</div>
+            </div>
+
+            {/* Main Card Content */}
+            <div className="flex-1 flex flex-col p-6 pt-20">
+              {/* Featured Image */}
+              <div className="w-full flex-1 bg-gray-100 rounded-lg overflow-hidden mb-4 flex items-center justify-center border-2 border-blue-400">
+                {post.image ? (
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                    crossOrigin="anonymous"
+                  />
+                ) : (
+                  <div className="text-gray-400 text-6xl font-bold">image</div>
+                )}
+              </div>
+
+              {/* Content Section */}
+              <div className="bg-white rounded-lg p-4 border-2 border-blue-400">
+                {/* Blog Title */}
+                <h2 className="text-gray-900 text-xl font-bold mb-2 line-clamp-2">
+                  {post.title}
+                </h2>
+
+                {/* Excerpt */}
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                  {post.excerpt}
+                </p>
+
+                {/* Date and Time */}
+                <div className="text-gray-500 text-xs mb-3">
+                  {post.date} {post.time && `• ${post.time}`}
+                </div>
+
+                {/* CTA Button */}
+                <button className="w-full border-2 border-gray-300 rounded-lg py-2.5 text-gray-700 text-sm font-medium hover:bg-gray-50 transition-colors">
+                  to read more click
+                </button>
+              </div>
+            </div>
+
+            {/* Bottom Navigation */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 z-20">
+              <input
+                type="text"
+                placeholder="Send message"
+                className="flex-1 bg-white/10 backdrop-blur-sm border border-white/30 rounded-full px-4 py-2 text-white text-sm placeholder-white/70"
+                readOnly
               />
-            </div>
-
-            {/* Content */}
-            <div className="relative z-10">
-              {/* Tags */}
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {post.tags.slice(0, 3).map((tag, index) => (
-                    <span
-                      key={index}
-                      className="text-primary text-xs border border-primary/50 px-3 py-1 bg-primary/5"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {/* Title */}
-              <h2 className="text-white text-3xl font-bold mb-3 leading-tight line-clamp-3">
-                {post.title}
-              </h2>
-
-              {/* Excerpt */}
-              <p className="text-gray text-base leading-relaxed line-clamp-2 mb-4">
-                {post.excerpt}
-              </p>
-            </div>
-
-            {/* Footer */}
-            <div className="relative z-10 flex items-end justify-between">
-              {/* Author Info */}
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 border-2 border-primary flex items-center justify-center text-primary text-xl font-bold">
-                  D
-                </div>
-                <div>
-                  <div className="text-white font-semibold">Darshan</div>
-                  <div className="text-gray text-sm">darsha.dev</div>
-                </div>
-              </div>
-
-              {/* Date */}
-              <div className="text-right">
-                <div className="text-primary text-sm font-medium">{post.date}</div>
-                <div className="text-gray text-xs">{post.readTime} min read</div>
+              <div className="w-10 h-10 bg-white/10 backdrop-blur-sm border border-white/30 rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
               </div>
             </div>
-
-            {/* Featured Image Overlay (if exists) */}
-            {post.image && (
-              <div className="absolute top-0 right-0 w-1/3 h-full opacity-20">
-                <img
-                  src={post.image}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  crossOrigin="anonymous"
-                />
-              </div>
-            )}
           </div>
         </div>
 
