@@ -4,7 +4,7 @@ import { db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { useMetaTags } from '../hooks/useMetaTags.jsx';
+import { useMetaTags } from '../hooks/useMetaTags';
 
 export default function BlogPostDetail() {
   const { id } = useParams();
