@@ -15,6 +15,7 @@ export default function AdminDashboard() {
   const [authLoading, setAuthLoading] = useState(true);
   const [loginError, setLoginError] = useState('');
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState([]);
   
   // Cloudinary config
   const CLOUDINARY_CLOUD_NAME = 'dg2rrya2l';
@@ -143,6 +144,76 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleContentImageUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    setUploadingImage(true);
+
+    try {
+      const uploadPromises = files.map(async (file) => {
+        // Check file size
+        if (file.size > 50 * 1024 * 1024) {
+          throw new Error(`${file.name} is too large (max 50MB)`);
+        }
+
+        // Check file type
+        if (!file.type.startsWith('image/')) {
+          throw new Error(`${file.name} is not an image`);
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+        formData.append('folder', 'blog');
+
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
+
+        const data = await response.json();
+        
+        if (!data.secure_url) {
+          throw new Error('Upload failed');
+        }
+
+        return {
+          url: data.secure_url,
+          name: file.name
+        };
+      });
+
+      const results = await Promise.all(uploadPromises);
+      
+      // Add to uploaded images list
+      setUploadedImages(prev => [...prev, ...results]);
+      
+      alert(`✅ ${results.length} image(s) uploaded successfully!`);
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('❌ ' + error.message);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const insertImageIntoContent = (imageUrl) => {
+    const markdownImage = `\n\n![Image](${imageUrl})\n\n`;
+    setFormData(prev => ({
+      ...prev,
+      content: prev.content + markdownImage
+    }));
+  };
+
+  const copyImageUrl = (url) => {
+    navigator.clipboard.writeText(url);
+    alert('✅ Image URL copied to clipboard!');
+  };
+
   const handleNewPost = () => {
     setFormData({
       title: '',
@@ -153,6 +224,7 @@ export default function AdminDashboard() {
       readTime: 5,
     });
     setEditingPost(null);
+    setUploadedImages([]);
     setShowEditor(true);
   };
 
@@ -166,6 +238,7 @@ export default function AdminDashboard() {
       readTime: post.readTime,
     });
     setEditingPost(post.id);
+    setUploadedImages([]);
     setShowEditor(true);
   };
 
@@ -374,7 +447,62 @@ export default function AdminDashboard() {
                 className="w-full border border-gray bg-transparent px-4 py-2 text-white focus:outline-none focus:border-primary resize-y font-mono text-sm"
                 required
               />
+              <div className="mt-2 flex gap-2">
+                <label className="border border-primary px-4 py-2 text-white text-sm cursor-pointer hover:bg-primary/10 transition-colors relative">
+                  {uploadingImage ? (
+                    <span className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Uploading...
+                    </span>
+                  ) : (
+                    '📷 Upload Images for Content'
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleContentImageUpload}
+                    disabled={uploadingImage}
+                    className="hidden"
+                  />
+                </label>
+                <p className="text-gray text-xs flex items-center">Upload multiple images to insert in your content</p>
+              </div>
             </div>
+
+            {/* Uploaded Images Gallery */}
+            {uploadedImages.length > 0 && (
+              <div>
+                <label className="text-white mb-2 block">Uploaded Images ({uploadedImages.length})</label>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {uploadedImages.map((img, index) => (
+                    <div key={index} className="border border-gray p-2">
+                      <img 
+                        src={img.url} 
+                        alt={img.name}
+                        className="w-full h-32 object-cover mb-2"
+                      />
+                      <div className="flex flex-col gap-1">
+                        <button
+                          type="button"
+                          onClick={() => insertImageIntoContent(img.url)}
+                          className="text-primary hover:underline text-xs"
+                        >
+                          ➕ Insert in Content
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => copyImageUrl(img.url)}
+                          className="text-gray hover:text-white text-xs"
+                        >
+                          📋 Copy URL
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
