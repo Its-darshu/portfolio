@@ -127,10 +127,7 @@ export default function BlogPostDetail() {
 
         {/* Post Content (render Markdown) */}
         <article className="prose prose-invert max-w-none">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            className="text-gray text-lg leading-relaxed"
-          >
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {post.content}
           </ReactMarkdown>
         </article>

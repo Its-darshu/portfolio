@@ -18,3 +18,128 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Blog Content Styling */
+.prose {
+  color: #ABB2BF;
+  max-width: none;
+}
+
+.prose p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: #FFFFFF;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.prose h1 {
+  font-size: 2rem;
+}
+
+.prose h2 {
+  font-size: 1.75rem;
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+}
+
+.prose img {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #3C3C3C;
+  max-width: 100%;
+  height: auto;
+}
+
+.prose ul,
+.prose ol {
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+.prose code {
+  background-color: #3C3C3C;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  color: #C678DD;
+}
+
+.prose pre {
+  background-color: #3C3C3C;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: #ABB2BF;
+}
+
+.prose blockquote {
+  border-left: 4px solid #C778DD;
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #ABB2BF;
+}
+
+.prose a {
+  color: #C778DD;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #FFFFFF;
+}
+
+.prose strong {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.prose hr {
+  border-color: #3C3C3C;
+  margin: 2rem 0;
+}
+
+.prose table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid #3C3C3C;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.prose th {
+  background-color: #3C3C3C;
+  color: #FFFFFF;
+  font-weight: 600;
+}
