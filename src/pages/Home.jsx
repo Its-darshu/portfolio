@@ -18,7 +18,7 @@ export default function Home() {
       <section className="px-4 py-8 md:max-w-[1024px] md:mx-auto md:py-24 relative">
         {/* Mobile Layout */}
         <div className="md:hidden">
-          <h1 className="text-[32px] font-semibold leading-tight mb-8 font-mono">
+          <h1 className="text-[32px] font-bold leading-tight mb-8 font-mono">
             Darshan is a <span className="text-primary">web designer</span> and <span className="text-primary">front-end developer</span>
           </h1>
           <p className="text-gray text-base leading-relaxed mb-8 w-full max-w-[328px]">
@@ -31,7 +31,7 @@ export default function Home() {
           </div>
           
           {/* Profile Image */}
-          <div className="flex justify-center mb-8 relative z-20">
+          <div className="flex justify-center -mt-8 mb-1 relative z-20">
             <div className="w-[198px] h-[297px] relative">
               <img 
                 src="/prosvg.svg" 
@@ -71,7 +71,7 @@ export default function Home() {
         {/* Desktop Layout */}
         <div className="hidden md:grid md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-8">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">
               <span className="whitespace-nowrap">Darshan is a <span className="text-primary">web designer</span> and</span>
               <br />
               <span className="text-primary">full-stack developer</span>
@@ -96,13 +96,13 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="relative flex justify-center items-center">
+          <div className="relative flex flex-col justify-center items-center">
             {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-24 h-24">
               <Logo className="w-full h-full opacity-20" />
             </div>
-            {/* Profile image - positioned to overlap through status bar */}
-            <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center z-20">
+            {/* Profile image */}
+            <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center z-20 mb-4">
               <img 
                 src="/prosvg.svg" 
                 alt="Darshan - Web Designer and Full-Stack Developer"
@@ -119,8 +119,8 @@ export default function Home() {
                 <span className="absolute text-gray text-sm">Add profile.jpg</span>
               </div>
             </div>
-            {/* Status badge - positioned to be overlapped by image */}
-            <div className="absolute bottom-5 left-0 right-0 mx-auto max-w-[350px] bg-background border border-gray p-2 flex items-center gap-2 z-10">
+            {/* Status badge */}
+            <div className="w-full max-w-[350px] bg-background border border-gray p-2 flex items-center gap-2 mx-auto">
               <div className="w-4 h-4 bg-primary border border-primary"></div> 
               <p className="text-gray text-sm">
                 Currently working on <span className="font-bold">Freelance</span>
@@ -177,12 +177,12 @@ export default function Home() {
           <SkillBlock
             title="Cloud & DevOps"
             skills={[['AWS', 'Vercel', 'Netlify', 'Railway', 'Heroku', 'GitHub Actions', 'CI/CD', 'Docker']]}
-            className="lg:col-span-1 -mt-6" // see add mt to is align with other blocks
+            className="lg:col-span-1 lg:-mt-6" // see add mt to is align with other blocks
           />
           <SkillBlock
             title="Design & UI/UX"
             skills={[['Figma', 'Tailwind CSS', 'Material-UI', 'Responsive Design', 'Adobe XD', 'Canva']]}
-            className="lg:col-span-1 -mt-6"
+            className="lg:col-span-1 lg:-mt-6"
           />
         </div>
         {/* Decorations */}
