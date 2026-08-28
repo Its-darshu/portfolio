@@ -651,20 +651,19 @@ a.pill { display: inline-flex; }
 .bpost:has(.bpost-media) .bpost-body { grid-column: 2; grid-row: 1; }
 .bpost-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .bpost-body { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: .75rem; min-width: 0; }
-.bpost-top {
-  display: flex; justify-content: flex-end; align-items: baseline; gap: 1rem;
-  font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 500;
-}
-.bpost-num { color: var(--orange-deep); font-size: .74rem; }
-.bpost-read { font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; opacity: .6; }
 .bpost-title { font-family: var(--ff-fat); font-size: clamp(1.35rem, 3.4vw, 2rem); line-height: .95; }
 .bpost-excerpt { font-size: .78rem; line-height: 1.65; opacity: .82; }
 .bpost-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
 .bpost-meta { font-size: .58rem; letter-spacing: .2em; text-transform: uppercase; opacity: .6; display: flex; gap: 1rem; }
 .bpost-foot {
-  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
   border-top: 2px solid var(--cream-dim); padding-top: .8rem; margin-top: auto;
 }
+.bpost-meta-line {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: .55rem;
+  font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; opacity: .75;
+}
+.bpost-meta-line .bpost-num { opacity: 1; color: var(--orange-deep); }
 .bpost-arrow {
   display: inline-flex; align-items: center;
   border: 2px solid var(--ink); padding: .38rem .8rem .32rem;
@@ -677,11 +676,7 @@ a.pill { display: inline-flex; }
   .bpost:has(.bpost-media) { grid-template-columns: 1fr; }
   .bpost:has(.bpost-media) .bpost-media { grid-column: 1; grid-row: 1; height: auto; max-height: 260px; aspect-ratio: 16/9; }
   .bpost:has(.bpost-media) .bpost-body { grid-column: 1; grid-row: 2; }
-  .bpost-top { order: 4; }
-  .bpost-title { order: 1; }
-  .bpost-excerpt { order: 2; }
-  .bpost-tags { order: 3; }
-  .bpost-foot { order: 5; margin-top: 0; }
+  .bpost-foot { margin-top: 0; }
 }
 
 /* newsletter signup row */

@@ -11,9 +11,6 @@ export default function BlogPost({ post, index = 0 }) {
         </div>
       )}
       <div className="bpost-body">
-        <div className="bpost-top">
-          <span className="bpost-num">{num} / {post.date}</span>
-        </div>
         <h3 className="bpost-title">{post.title}</h3>
         <p className="bpost-excerpt">{post.excerpt}</p>
         {post.tags && post.tags.length > 0 && (
@@ -22,7 +19,7 @@ export default function BlogPost({ post, index = 0 }) {
           </div>
         )}
         <div className="bpost-foot">
-          <span className="bpost-read">{post.readTime} MIN READ</span>
+          <span className="bpost-meta-line"><span className="bpost-num">{num} / {post.date}</span><span>·</span><span>{post.readTime} MIN READ</span></span>
           <span className="bpost-arrow">READ →</span>
         </div>
       </div>
