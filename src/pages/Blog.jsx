@@ -52,7 +52,7 @@ export default function Blog() {
         </div>
       </section>
 
-      <section id="story" data-light-section style={{ paddingTop: '1rem' }}>
+      <section id="story" data-light-section style={{ paddingTop: '1rem', minHeight: 0, alignItems: 'flex-start' }}>
         <div className="story-inner">
           <div className="sec-tag" data-reveal>Recent Posts</div>
           {loading ? <LoadingBlock /> : blogPosts.length === 0 ? <EmptyBlock /> : (
@@ -63,7 +63,7 @@ export default function Blog() {
         </div>
       </section>
 
-      <section id="proof" data-light-section style={{ paddingTop: '1rem' }}>
+      <section id="proof" data-light-section style={{ paddingTop: '1rem', minHeight: 0, alignItems: 'flex-start' }}>
         <div className="proof-inner">
           <div className="sec-tag" data-reveal>Stay Tuned</div>
           <div className="panel" data-reveal>
