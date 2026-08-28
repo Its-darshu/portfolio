@@ -677,7 +677,11 @@ a.pill { display: inline-flex; }
   .bpost:has(.bpost-media) { grid-template-columns: 1fr; }
   .bpost:has(.bpost-media) .bpost-media { grid-column: 1; grid-row: 1; height: auto; max-height: 260px; aspect-ratio: 16/9; }
   .bpost:has(.bpost-media) .bpost-body { grid-column: 1; grid-row: 2; }
-  .bpost-foot { margin-top: 0; }
+  .bpost-top { order: 4; }
+  .bpost-title { order: 1; }
+  .bpost-excerpt { order: 2; }
+  .bpost-tags { order: 3; }
+  .bpost-foot { order: 5; margin-top: 0; }
 }
 
 /* newsletter signup row */
