@@ -1,7 +1,7 @@
 const LINKS = [
   { label: 'EMAIL', value: 'darshan99806@gmail.com', href: 'mailto:darshan99806@gmail.com', solid: true },
   { label: 'GITHUB', value: 'github.com/Its-darshu', href: 'https://github.com/Its-darshu' },
-  { label: 'X / TWITTER', value: '@cookmithick', href: 'https://x.com/cookmithick' },
+  { label: 'X', value: '@cookmithick', href: 'https://x.com/cookmithick' },
   { label: 'DISCORD', value: 'darshan_66', href: 'https://discord.com/users/darshan_66' },
   { label: 'RESUME', value: 'Darshan-Resume.pdf', href: '/Darshan-Resume.pdf' },
 ];

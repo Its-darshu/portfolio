@@ -1,4 +1,3 @@
-import Marquee from '../components/Marquee';
 import SkillBlock from '../components/SkillBlock';
 
 const SKILL_GROUPS = [
@@ -56,8 +55,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-      <Marquee items={['LANGUAGES', 'FRONTEND', 'BACKEND', 'DATA', 'AI', 'DESIGN']} />
 
       <section id="stack" data-light-section>
         <div className="stack-inner">
