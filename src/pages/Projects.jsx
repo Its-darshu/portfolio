@@ -1,110 +1,43 @@
-import SectionTitle from '../components/SectionTitle';
 import ProjectCard from '../components/ProjectCard';
+import { PROJECTS } from '../data/portfolio';
+
 export default function Projects() {
-  const completeProjects = [
-    {
-      title: 'Phish Guard',
-      description: 'Detect Email phishing using AI.',
-      technologies: ['React', 'JavaScript', 'cohereAi'],
-      liveUrl: '#',
-      githubUrl: 'https://github.com/Its-darshu/phishing-detector',
-      image: '/11.svg',
-    },
-
-    {
-      title: 'DarkSphere',
-      description: 'A place to share your darkhumor memes anonymously.',
-      technologies: ['React'],
-      liveUrl: 'https://darksphere.vercel.app/',
-      githubUrl: 'https://github.com/Its-darshu/DarkSphere',
-      image: '/darksphere.svg',
-    },
-
-    {
-      title: 'Sullia auto',
-      description: 'A platform service to call immediate auto in sullia.',
-      technologies: ['React'],
-      liveUrl: 'https://sulliaauto.vercel.app/',
-      githubUrl: 'https://github.com/Its-darshu/auto-rickshaw',
-      image: '/sullia-auto.svg',
-    },
-
-    {
-      title: 'SmartQ',
-      description: 'A platform service to manage hospital queues effectively.',
-      technologies: ['React', 'Flask', 'Firebase'],
-      liveUrl: 'https://smartq-patient.onrender.com/',
-      githubUrl: 'https://github.com/dayanandaks4/HACTHON_SIT',
-      image: '/smartq.svg',
-    },
-
-    {
-      title: 'AI tutor',
-      description: 'Ai GPT which generates text, voice, image at same time.',
-      technologies: ['TS', 'Flask', 'g-2.5-flash','HF-Flux'],
-      liveUrl: '',
-      githubUrl: 'https://github.com/Its-darshu/Personal-Tutor',
-      image: '/aitutor.svg',
-    },
-
-    {
-      title: 'Visora',
-      description: 'Powerful AI tools for text, image, voice, and audio processing.',
-      technologies: ['TS', 'Flask', 'g-2.5-pro','HF-Flux'],
-      liveUrl: '',
-      githubUrl: 'https://github.com/Its-darshu/Visora',
-      image: '/visora.svg',
-    },
-
-  ];
-  const smallProjects = [
-    {
-      title: 'Discord quest',
-      description: 'A JavaScript script to automatically complete Discord quests by simulating game activity, video watching, or streaming.',
-      technologies: ['JS'],
-      githubUrl: 'https://github.com/Its-darshu/discord-quest',
-    },
-  ];
+  const main = PROJECTS.filter(p => !p.small);
+  const small = PROJECTS.filter(p => p.small);
   return (
-    <div className="w-full min-h-screen bg-background">
-      {/* Page Title */}
-      <section className="max-w-[1024px] mx-auto px-4 py-8">
-        <div className="flex items-start text-3xl font-semibold mb-4">
-          <span className="text-primary">/</span>
-          <span className="text-white">projects</span>
+    <>
+      <section className="page-head" data-light-section>
+        <div className="page-head-inner">
+          <div className="sec-tag">WORK</div>
+          <h2 className="sec-giant" style={{ marginBottom: '.4rem' }}>SHIPPED.</h2>
+          <p style={{ fontSize: '.78rem', letterSpacing: '.14em', textTransform: 'uppercase', opacity: '.65', marginBottom: '2.4rem' }}>
+            Six products live · one tool brewing
+          </p>
         </div>
-        <p className="text-white text-base">List of my projects</p>
       </section>
-      {/* Complete Apps */}
-      <section className="max-w-[1024px] mx-auto px-4 py-16 relative">
-        <div className="mb-12">
-          <h2 className="flex items-start font-medium text-3xl">
-            <span className="text-primary">#</span>
-            <span className="text-white">complete-apps</span>
-          </h2>
+
+      <section id="work" style={{ paddingTop: '2.5rem' }}>
+        <div className="work-inner">
+          <div className="sec-tag" data-reveal>The Main Pile</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ rowGap: '2.6rem' }}>
+            {main.map(p => <ProjectCard key={p.num} project={p} />)}
+          </div>
+
+          {small.length > 0 && (
+            <>
+              <div className="sec-tag" data-reveal style={{ marginTop: '6rem' }}>Small Things</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ rowGap: '2.6rem' }}>
+                {small.map(p => <ProjectCard key={p.num} project={p} />)}
+              </div>
+            </>
+          )}
+
+          <div className="gh-cta" data-reveal>
+            <a className="pill solid" href="https://github.com/Its-darshu" target="_blank" rel="noopener noreferrer">MORE ON GITHUB ↗</a>
+            <a className="pill" href="mailto:darshan99806@gmail.com">WANT ONE LIKE THIS? →</a>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {completeProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
-          ))}
-        </div>
-        {/* Decorations */}
       </section>
-      {/* Small Projects */}
-      <section className="max-w-[1024px] mx-auto px-4 py-16 relative">
-        <div className="mb-12">
-          <h2 className="flex items-start font-medium text-3xl">
-            <span className="text-primary">#</span>
-            <span className="text-white">small-projects</span>
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {smallProjects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
-          ))}
-        </div>
-        {/* Decorations */}
-      </section>
-    </div>
+    </>
   );
 }

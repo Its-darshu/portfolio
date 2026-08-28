@@ -7,12 +7,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0015FF',
-        background: '#262626',
-        gray: '#CDCDCD',
+        primary: '#FF5C1F',
+        background: '#F5EFE3',
+        gray: '#191512',
       },
       fontFamily: {
-        'fira': ['"Fira Code"', 'monospace'],
+        'mono': ['"DM Mono"', 'monospace'],
+        'fat': ['"Fat Molly"', '"Arial Black"', 'sans-serif'],
       },
     },
   },
