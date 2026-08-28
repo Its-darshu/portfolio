@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
-export default function BlogPost({ post }) {
+export default function BlogPost({ post, index = 0 }) {
   const navigate = useNavigate();
+  const num = String(index + 1).padStart(2, '0');
   return (
     <article className="bpost" onClick={() => navigate(`/blog/${post.id}`)}>
       {post.image && (
@@ -10,20 +11,21 @@ export default function BlogPost({ post }) {
         </div>
       )}
       <div className="bpost-body">
+        <div className="bpost-top">
+          <span className="bpost-num">{num} / {post.date}</span>
+        </div>
         <h3 className="bpost-title">{post.title}</h3>
         <p className="bpost-excerpt">{post.excerpt}</p>
-        <div className="bpost-meta">
-          <span>{post.date}</span>
-          {post.time && <span>{post.time}</span>}
-          <span>{post.readTime} MIN READ</span>
-        </div>
         {post.tags && post.tags.length > 0 && (
           <div className="bpost-tags">
             {post.tags.map((tag, i) => <span className="wtag" key={i}>#{tag}</span>)}
           </div>
         )}
+        <div className="bpost-foot">
+          <span className="bpost-read">{post.readTime} MIN READ</span>
+          <span className="bpost-arrow">READ →</span>
+        </div>
       </div>
-      <div className="bpost-arrow">→</div>
     </article>
   );
 }

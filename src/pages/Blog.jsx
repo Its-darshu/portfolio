@@ -57,7 +57,7 @@ export default function Blog() {
           <div className="sec-tag" data-reveal>Recent Posts</div>
           {loading ? <LoadingBlock /> : blogPosts.length === 0 ? <EmptyBlock /> : (
             <div className="flex flex-col gap-6" data-reveal>
-              {blogPosts.map(post => <BlogPost key={post.id} post={post} />)}
+              {blogPosts.map((post, i) => <BlogPost key={post.id} post={post} index={i} />)}
             </div>
           )}
         </div>
