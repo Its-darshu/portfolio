@@ -90,14 +90,29 @@ export default function Effects() {
 
   /* ── REVEALS ───────────────────────────────────────── */
   useEffect(() => {
-    const els = document.querySelectorAll('[data-reveal]');
+    const root = document.getElementById('root') || document.body;
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, { threshold: .12 });
-    els.forEach(el => io.observe(el));
-    return () => io.disconnect();
+
+    const scan = () => {
+      const els = root.querySelectorAll('[data-reveal]:not(.in)');
+      els.forEach(el => io.observe(el));
+    };
+    scan();
+
+    let scheduled = false;
+    const scanSoon = () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => { scheduled = false; scan(); });
+    };
+    const mo = new MutationObserver(scanSoon);
+    mo.observe(root, { childList: true, subtree: true });
+
+    return () => { io.disconnect(); mo.disconnect(); };
   }, [location.pathname]);
 
   /* ── SCROLL RESTORATION ───────────────────────────── */
